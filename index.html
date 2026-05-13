@@ -2169,16 +2169,28 @@ function openInvoice(){
   var ordId="#CB-2025-00"+Math.floor(Math.random()*900+100);
   var today=new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
   var ckName=document.getElementById("ck-name");var custName=ckName&&ckName.value?ckName.value:"Customer";
-  var html='<div class="inv-logo">CRAFT BIZ</div>';
-  html+='<div class="inv-since">EST. 2023 · CALICUT, KERALA</div>';
-  html+='<div class="inv-meta">craftbiz.co.in · craftbizbiz@gmail.com · 79072 54065</div>';
-  html+='<div class="inv-grid"><div><div class="inv-sec-lbl">From</div><div class="inv-addr"><strong>Craft Biz</strong><br>Calicut, Kerala, India<br>craftbizbiz@gmail.com<br>79072 54065</div></div><div><div class="inv-sec-lbl">Invoice</div><div class="inv-addr"><strong>Invoice No:</strong> '+ordId+'<br><strong>Date:</strong> '+today+'<br><strong>Bill To:</strong> '+custName+'</div></div></div>';
+  /* ── dark header ── */
+  var html='<div class="inv-hdr">';
+  html+='<div class="inv-hdr-brand"><div class="inv-logo">CRAFT BIZ</div><div class="inv-since">EST. 2023 · CALICUT, KERALA</div></div>';
+  html+='<div class="inv-hdr-tag"><div class="inv-tag-lbl">Invoice</div><div class="inv-tag-num">'+ordId+'</div><div class="inv-tag-date">'+today+'</div></div>';
+  html+='</div>';
+  /* ── accent stripe ── */
+  html+='<div class="inv-stripe"></div>';
+  /* ── contact bar ── */
+  html+='<div class="inv-metabar">craftbiz.co.in &nbsp;·&nbsp; craftbizbiz@gmail.com &nbsp;·&nbsp; +91 79072 54065</div>';
+  /* ── body content ── */
+  html+='<div class="inv-content">';
+  html+='<div class="inv-grid">';
+  html+='<div><div class="inv-sec-lbl">From</div><div class="inv-addr"><strong>Craft Biz</strong><br>Calicut, Kerala, India<br>craftbizbiz@gmail.com<br>79072 54065</div></div>';
+  html+='<div><div class="inv-sec-lbl">Bill To</div><div class="inv-addr"><strong>'+custName+'</strong></div></div>';
+  html+='</div>';
   html+='<table class="inv-tbl"><thead><tr><th>#</th><th>Product</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody>';
   if(cart.length){cart.forEach(function(c,i){var p=getProd(c.id);if(!p)return;html+='<tr><td>'+(i+1)+'</td><td>'+p.name+'</td><td>'+c.qty+'</td><td>₹'+p.price.toLocaleString("en-IN")+'</td><td>₹'+(p.price*c.qty).toLocaleString("en-IN")+'</td></tr>';});}
   else{html+='<tr><td>1</td><td>Custom Product</td><td>1</td><td>₹120</td><td>₹120</td></tr>';}
   html+='</tbody></table>';
-  html+='<div class="inv-totals"><div class="inv-t-row"><span>Subtotal</span><span>₹'+sub.toLocaleString("en-IN")+'</span></div>'+(disc?'<div class="inv-t-row"><span>Discount</span><span>-₹'+disc.toLocaleString("en-IN")+'</span></div>':'')+'<div class="inv-t-row"><span>GST (18%)</span><span>₹'+gst.toLocaleString("en-IN")+'</span></div><div class="inv-t-row big"><span><strong>Total</strong></span><strong>₹'+tot.toLocaleString("en-IN")+'</strong></div></div>';
-  html+='<div class="inv-footer">Thank you for choosing Craft Biz!<br>craftbizbiz@gmail.com · 79072 54065 · craftbiz.co.in<br>No return/refund on custom orders · Calicut, Kerala, India</div>';
+  html+='<div class="inv-totals"><div class="inv-t-row"><span>Subtotal</span><span>₹'+sub.toLocaleString("en-IN")+'</span></div>'+(disc?'<div class="inv-t-row"><span>Discount</span><span style="color:#16a34a">−₹'+disc.toLocaleString("en-IN")+'</span></div>':'')+'<div class="inv-t-row"><span>GST (18%)</span><span>₹'+gst.toLocaleString("en-IN")+'</span></div><div class="inv-t-row big"><span><strong>Total</strong></span><strong>₹'+tot.toLocaleString("en-IN")+'</strong></div></div>';
+  html+='<div class="inv-footer">Thank you for choosing Craft Biz! &nbsp;🙏<br>craftbizbiz@gmail.com · 79072 54065 · craftbiz.co.in<br><em>No return/refund on custom orders · Calicut, Kerala, India</em></div>';
+  html+='</div>';
   bc.innerHTML=html;
   openOv("invOv");
 }
