@@ -1,0 +1,71 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.css":  "css"
+  },
+
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+
+  "emmet.includeLanguages": {
+    "html": "html"
+  },
+
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.CustomBrowser": "chrome",
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "page 1.html": "craftbiz.css, .vscode",
+    "*.html": "${capture}.css, ${capture}.js",
+    "images": "images/laser, images/cnc, images/3d, images/tshirt, images/gifts, images/homedecor, images/wedding, images/resin, images/stationery, images/services, images/hero, images/blog"
+  },
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true
+  },
+
+  "files.watcherExclude": {
+    "**/images/**/*.jpg": false,
+    "**/images/**/*.png": false
+  },
+
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#0f0f0f",
+    "sideBar.background": "#141414",
+    "statusBar.background": "#c8401a",
+    "statusBar.foreground": "#ffffff",
+    "editorGroupHeader.tabsBackground": "#111111",
+    "tab.activeBackground": "#1a1a1a",
+    "tab.inactiveBackground": "#0d0d0d"
+  },
+
+  "workbench.iconTheme": "material-icon-theme",
+
+  "cSpell.words": [
+    "craftbiz", "craftbizbiz", "tshirt", "homedecor",
+    "wa-float", "pc-img", "webp", "WEBP",
+    "topbar", "topnav", "mhdr", "xbtn", "ferr", "fsel",
+    "ftxt", "fcheck", "vbtn", "ptitle", "qchip", "grev",
+    "insta", "fbtn", "srch", "chdr", "csel", "bcol",
+    "bbar", "blbl", "cust", "tabular", "nums",
+    "colour", "colours", "Colour", "Colours", "COLOUR", "décor",
+    "Customise", "Customisation", "favourite", "specialise", "personalised",
+    "Fibreboard", "Pantone", "yourname",
+    "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
+    "ENDMAY", "NEWUSER",
+    "Arun", "Priya", "Fathima",
+    "Malappuram", "Thrissur", "Kannur", "Kozhikode",
+    "Karnataka", "Telangana", "Andhra",
+    "Pradesh", "Uttar", "Madhya", "Nadu"
+  ],
+
+  "search.exclude": {
+    "**/images/**": false
+  }
+}

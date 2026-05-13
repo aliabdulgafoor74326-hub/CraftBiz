@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -command \"Get-Content 'c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\\\\page 1.html' | Select-Object -Skip 299 -First 80\")",
+      "Bash(powershell -command \"Get-Content 'c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\\\\page 1.html' | Select-Object -Skip 354 -First 80\")",
+      "Bash(powershell -command \"Get-Content 'c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\\\\page 1.html' | Select-Object -Skip 358 -First 15\")",
+      "Bash(awk 'NR>=372 && NR<=405 && !/base64/' \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft/page 1.html\")",
+      "Bash(awk 'NR>=460 && NR<=560' \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft/page 1.html\")",
+      "Bash(npx cspell *)",
+      "Bash(npx --yes cspell \"page 1.html\")",
+      "Bash(npx --yes cspell \"craftbiz.css\")",
+      "Bash(awk 'NR>=993 && NR<=1015' \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft/page 1.html\")"
+    ]
+  }
+}
