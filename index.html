@@ -2189,6 +2189,7 @@ function openInvoice(){
   else{html+='<tr><td>1</td><td>Custom Product</td><td>1</td><td>₹120</td><td>₹120</td></tr>';}
   html+='</tbody></table>';
   html+='<div class="inv-totals"><div class="inv-t-row"><span>Subtotal</span><span>₹'+sub.toLocaleString("en-IN")+'</span></div>'+(disc?'<div class="inv-t-row"><span>Discount</span><span style="color:#16a34a">−₹'+disc.toLocaleString("en-IN")+'</span></div>':'')+'<div class="inv-t-row"><span>GST (18%)</span><span>₹'+gst.toLocaleString("en-IN")+'</span></div><div class="inv-t-row big"><span><strong>Total</strong></span><strong>₹'+tot.toLocaleString("en-IN")+'</strong></div></div>';
+  html+='<div class="inv-sign-row"><div class="inv-sign"><div class="inv-sign-line"></div><div class="inv-sign-lbl">Authorised Signatory</div><div class="inv-sign-name">Craft Biz Studio</div></div><div class="inv-sign"><div class="inv-sign-line"></div><div class="inv-sign-lbl">Customer Signature</div></div></div>';
   html+='<div class="inv-footer">Thank you for choosing Craft Biz! &nbsp;🙏<br>craftbizbiz@gmail.com · 79072 54065 · craftbiz.co.in<br><em>No return/refund on custom orders · Calicut, Kerala, India</em></div>';
   html+='</div>';
   bc.innerHTML=html;
