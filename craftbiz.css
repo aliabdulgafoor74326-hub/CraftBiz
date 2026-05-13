@@ -1359,6 +1359,14 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
 .inv-sign-lbl  { font-size:.6rem; color:#aaa; text-transform:uppercase; letter-spacing:.1em; }
 .inv-sign-name { font-size:.74rem; font-weight:700; color:#555; margin-top:.2rem; }
 
+/* Policy section */
+.inv-policy        { margin-top:2rem; padding:1.2rem 1.5rem; background:#f8f8f6; border:1px solid #e2e2de; border-radius:6px; }
+.inv-policy-title  { font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; color:#c8401a; margin-bottom:.85rem; padding-bottom:.5rem; border-bottom:1px solid #e2e2de; }
+.inv-policy-grid   { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.inv-policy-col    { display:flex; flex-direction:column; gap:.6rem; }
+.inv-policy-sec    { font-size:.62rem; color:#666; line-height:1.7; }
+.inv-policy-lbl    { font-weight:700; color:#333; display:block; margin-bottom:.12rem; }
+
 /* ══════════════════════════════════════════════
    PRINT — A5 Invoice / Receipt
    148mm × 210mm · portrait
@@ -1436,8 +1444,16 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
   .inv-sign-lbl { display: block !important; font-size: .62rem; color: #aaa; text-transform: uppercase; letter-spacing: .1em; }
   .inv-sign-name{ display: block !important; font-size: .76rem; font-weight: 700; color: #444; margin-top: .22rem; }
 
-  /* 8. Footer */
-  .inv-footer { display: block !important; border-top: 1px solid #e2e2de; padding-top: 1rem; font-size: .68rem; color: #aaa; text-align: center; line-height: 1.8; margin-top: 2rem; page-break-inside: avoid; }
+  /* 8. Policy */
+  .inv-policy       { display: block !important; margin-top: 1.8rem !important; padding: 1rem 1.2rem !important; background: #f8f8f6 !important; border: 1px solid #e2e2de !important; border-radius: 4px !important; page-break-inside: avoid; }
+  .inv-policy-title { display: block !important; font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: #c8401a !important; margin-bottom: .7rem; padding-bottom: .45rem; border-bottom: 1px solid #e2e2de; }
+  .inv-policy-grid  { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: .9rem; }
+  .inv-policy-col   { display: flex !important; flex-direction: column; gap: .5rem; }
+  .inv-policy-sec   { display: block !important; font-size: .58rem; color: #666; line-height: 1.65; }
+  .inv-policy-lbl   { display: block !important; font-weight: 700; color: #333 !important; margin-bottom: .1rem; }
+
+  /* 9. Footer */
+  .inv-footer { display: block !important; border-top: 1px solid #e2e2de; padding-top: .85rem; font-size: .65rem; color: #aaa; text-align: center; line-height: 1.8; margin-top: 1.5rem; page-break-inside: avoid; }
 
   /* 7. Preserve colours when printing */
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
