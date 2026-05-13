@@ -1444,13 +1444,13 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
   .inv-sign-lbl { display: block !important; font-size: .62rem; color: #aaa; text-transform: uppercase; letter-spacing: .1em; }
   .inv-sign-name{ display: block !important; font-size: .76rem; font-weight: 700; color: #444; margin-top: .22rem; }
 
-  /* 8. Policy */
-  .inv-policy       { display: block !important; margin-top: 1.8rem !important; padding: 1rem 1.2rem !important; background: #f8f8f6 !important; border: 1px solid #e2e2de !important; border-radius: 4px !important; page-break-inside: avoid; }
-  .inv-policy-title { display: block !important; font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: #c8401a !important; margin-bottom: .7rem; padding-bottom: .45rem; border-bottom: 1px solid #e2e2de; }
-  .inv-policy-grid  { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: .9rem; }
-  .inv-policy-col   { display: flex !important; flex-direction: column; gap: .5rem; }
-  .inv-policy-sec   { display: block !important; font-size: .58rem; color: #666; line-height: 1.65; }
-  .inv-policy-lbl   { display: block !important; font-weight: 700; color: #333 !important; margin-bottom: .1rem; }
+  /* 8. Policy — always starts on page 2 */
+  .inv-policy       { display: block !important; margin-top: 0 !important; padding: 2rem 2.5rem !important; background: #fff !important; border: none !important; border-radius: 0 !important; page-break-before: always; }
+  .inv-policy-title { display: block !important; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .16em; color: #c8401a !important; margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 2px solid #e2e2de; }
+  .inv-policy-grid  { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1.2rem; }
+  .inv-policy-col   { display: flex !important; flex-direction: column; gap: .75rem; }
+  .inv-policy-sec   { display: block !important; font-size: .66rem; color: #555; line-height: 1.75; }
+  .inv-policy-lbl   { display: block !important; font-weight: 700; color: #222 !important; margin-bottom: .15rem; font-size: .68rem; }
 
   /* 9. Footer */
   .inv-footer { display: block !important; border-top: 1px solid #e2e2de; padding-top: .85rem; font-size: .65rem; color: #aaa; text-align: center; line-height: 1.8; margin-top: 1.5rem; page-break-inside: avoid; }
