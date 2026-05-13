@@ -806,7 +806,7 @@ footer{background:var(--black);color:rgba(255,255,255,.5);}
   .hero-stats::-webkit-scrollbar { display: none; }
   .hs-s { padding: .2rem .85rem; }
   .hs-n { font-size: .95rem; }
-  .hs-l { font-size: .5rem; }
+  .hs-l { font-size: .65rem; }
 
   /* Services */
   .services-grid { grid-template-columns: 1fr 1fr !important; gap: .6rem; }
@@ -923,8 +923,8 @@ footer{background:var(--black);color:rgba(255,255,255,.5);}
   /* Confirm & Invoice */
   .conf-hdr { padding: 1.5rem 1rem; }
   .conf-inner { padding: .9rem 1rem 1.2rem; }
-  .cp-ico { width: 24px; height: 24px; font-size: .68rem; }
-  .cp-lbl { font-size: .54rem; }
+  .cp-ico { width: 30px; height: 30px; font-size: .72rem; }
+  .cp-lbl { font-size: .62rem; }
   .conf-item { padding: .6rem .75rem; gap: .55rem; }
   .conf-totals { padding: .75rem; }
   .inv-body { padding: 1.2rem; }
@@ -1260,4 +1260,59 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
 @media (min-width:769px) and (max-width:899px){
   .prod-grid   { grid-template-columns:repeat(2,1fr); }
   .sale-items  { grid-template-columns:repeat(3,1fr); }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE PERFECTION
+   Touch targets · Font floors · Layout fixes
+══════════════════════════════════════════════ */
+@media (max-width:768px){
+
+  /* ── Touch targets ≥ 44px ── */
+  .xbtn         { width:44px; height:44px; }
+  .vt-btn       { width:40px; height:40px; }
+  .ci-qb        { width:36px; height:36px; font-size:.9rem; }
+  .ci-qn        { font-size:.82rem; width:24px; }
+  .ci-rm        { padding:.5rem .4rem; min-height:36px;
+                  display:inline-flex; align-items:center; }
+  .pc-wish      { width:36px; height:36px; opacity:1 !important; }
+  .sort-sel     { min-height:36px; }
+  .cat-tab      { min-height:44px; display:flex; align-items:center; }
+
+  /* ── Font floors (nothing below .66rem on mobile) ── */
+  .blbl         { font-size:.65rem; }
+  .sc-lbl       { font-size:.6rem; }
+  .cart-cnt     { font-size:.62rem; width:18px; height:18px; }
+  .rc           { font-size:.7rem; }
+  .bdg          { font-size:.64rem; }
+  .pc-cat       { font-size:.64rem; }
+  .pc-specs     { font-size:.66rem; }
+  .inv-tbl th   { font-size:.68rem; }
+  .inv-tbl td   { font-size:.74rem; }
+
+  /* ── List view: stack vertically on mobile ── */
+  .prod-grid.list-v .pc       { flex-direction:column; }
+  .prod-grid.list-v .pc-img   { width:100% !important; aspect-ratio:16/9; }
+  .prod-grid.list-v .pc-body  { padding:.75rem; }
+
+  /* ── Cart quantity row ── */
+  .ci-ctrl      { gap:.5rem; }
+
+  /* ── Admin quick-action grid ── */
+  .qa-grid      { grid-template-columns:repeat(2,1fr); gap:.5rem; }
+  .qa-btn       { min-height:56px; }
+
+  /* ── Prevent any element causing horizontal scroll ── */
+  .ann-track    { animation-duration:20s; }
+  .topnav       { max-width:100vw; overflow:hidden; }
+}
+
+/* ── XS phones < 380px ── */
+@media (max-width:380px){
+  .xbtn         { width:40px; height:40px; }
+  .hero-title   { font-size:1.9rem !important; }
+  .hs-s         { padding:.2rem .55rem; }
+  .hs-n         { font-size:.82rem; }
+  .pc-price     { font-size:.9rem; }
+  .mob-lnk      { font-size:.88rem; }
 }
