@@ -1358,8 +1358,8 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
 ══════════════════════════════════════════════ */
 @media print {
   @page {
-    size: A5 portrait;
-    margin: 12mm 14mm;
+    size: A4 portrait;
+    margin: 15mm 18mm;
   }
 
   /* 1. Kill everything on the page */
