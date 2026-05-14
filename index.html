@@ -1825,8 +1825,43 @@ function openService(cat){
   s.uses.forEach(function(u){h+='<span class="sp-tag sp-tag-use">'+u+'</span>';});
   h+='</div></div>';
 
+  /* Hamper builder — gifts only, inserted before product grid */
+  if(cat==='gifts'){
+    _hmpSel={};_hmpPkg='';
+    var hmpItems=PRODUCTS.filter(function(p){return p.cat==='gifts'&&p.ready&&p.id!==10;});
+    h+='<div class="hmp-builder" id="hmpBuilder">';
+    h+='<div class="hmp-builder-hd"><span style="font-size:2rem;flex-shrink:0">🎁</span><div><h2 style="font-size:1.1rem;font-weight:800;margin:0 0 .2rem">Build Your Corporate Gift Hamper</h2><p style="font-size:.75rem;color:var(--mid);margin:0">Tap items to select &nbsp;·&nbsp; Choose packaging &nbsp;·&nbsp; WhatsApp us to order</p></div></div>';
+    h+='<div class="hmp-grid">';
+    hmpItems.forEach(function(p){
+      h+='<div class="hmp-card" id="hc-'+p.id+'" onclick="_hmpToggle('+p.id+')">';
+      h+='<div class="hmp-chk">✓</div>';
+      h+='<div class="hmp-ico">'+p.e+'</div>';
+      h+='<div class="hmp-nm">'+p.name+'</div>';
+      h+='<div class="hmp-pr">₹'+p.price+'</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+    h+='<div class="hmp-pkg-sec">';
+    h+='<div class="hmp-pkg-ttl">Choose Hamper Packaging / Cover</div>';
+    h+='<div class="hmp-pkg-row">';
+    [{k:'Printed Gift Box',i:'📦',d:'Rigid box with logo'},{k:'Jute Bag',i:'🛍️',d:'Eco jute with print'},{k:'Kraft Paper Bag',i:'🎀',d:'Sustainable kraft bag'},{k:'Fabric Gift Bag',i:'👝',d:'Premium fabric bag'}].forEach(function(o){
+      h+='<div class="hmp-pkg-opt" data-pkg="'+o.k+'" onclick="_hmpPkgSel(\''+o.k+'\')">';
+      h+='<div class="hmp-pkg-ico">'+o.i+'</div>';
+      h+='<div class="hmp-pkg-lbl">'+o.k+'</div>';
+      h+='<div class="hmp-pkg-desc">'+o.d+'</div>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+    h+='<div class="hmp-bar" id="hmpBar">';
+    h+='<span class="hmp-bar-info" id="hmpBarTxt">Select items above to build your hamper</span>';
+    h+='<button class="hmp-bar-btn" id="hmpOrderBtn" onclick="_hmpOrder()" disabled>Order Hamper via WhatsApp 🎁</button>';
+    h+='</div>';
+    h+='</div>';
+  }
+
   /* ready products */
-  h+='<div class="sp-products-section"><h2 class="sp-sec-title">Ready to Ship</h2>';
+  var secTitle=cat==='gifts'?'Order Individual Items':'Ready to Ship';
+  h+='<div class="sp-products-section"><h2 class="sp-sec-title">'+secTitle+'</h2>';
   if(ready.length){
     h+='<div class="prod-grid" style="margin-top:1.2rem">';
     ready.forEach(function(p,i){
@@ -1873,23 +1908,6 @@ function openService(cat){
     h+='</div></div>';
   }
 
-  /* Build-your-hamper CTA — gifts only */
-  if(cat==='gifts'){
-    h+='<div class="hamper-builder" style="margin-top:2rem;background:linear-gradient(135deg,#0f0f0f 0%,#1a1a1a 100%);border-radius:14px;padding:2rem;text-align:center;color:#fff">';
-    h+='<div style="font-size:2rem;margin-bottom:.5rem">🎁</div>';
-    h+='<h3 style="font-size:1.1rem;font-weight:800;margin-bottom:.5rem;color:#fff">Build Your Own Corporate Gift Hamper</h3>';
-    h+='<p style="font-size:.78rem;color:rgba(255,255,255,.65);margin-bottom:1.2rem;max-width:480px;margin-left:auto;margin-right:auto">Pick any items from the list above individually, or let us bundle them into a branded gift box with your company logo. Perfect for employee onboarding, client appreciation & festivals.</p>';
-    h+='<div class="hamper-items" style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:1.4rem">';
-    ['☕ Mug','🍶 Bottle','🖊️ Pen','📓 Diary','🔑 Keychain','👜 Carry Bag','💳 NFC Card','📦 Gift Box','🔖 Bookmark','🏷️ Stickers','💌 Welcome Card','👕 Corporate Tee'].forEach(function(item){
-      h+='<span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:.3rem .75rem;font-size:.72rem;color:rgba(255,255,255,.85)">'+item+'</span>';
-    });
-    h+='</div>';
-    h+='<div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center">';
-    h+='<a href="https://wa.me/917907254065?text=Hi!+I+want+to+build+a+custom+corporate+gift+hamper.+Please+share+pricing+and+options." target="_blank" class="btn btn-pill" style="background:#25d366;color:#fff;border:none;min-height:44px">WhatsApp for Hamper Quote</a>';
-    h+='<button class="btn btn-pill" style="background:var(--accent);color:#fff;border:none;min-height:44px" onclick="openOv(\'bulkOv\')">Bulk Enquiry Form</button>';
-    h+='</div></div>';
-  }
-
   /* CTA bottom */
   h+='<div class="sp-bottom-cta"><h3>Have a different requirement?</h3><p>Describe your idea or upload a design file — we will quote within a few hours.</p>';
   h+='<div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center"><a href="https://wa.me/917907254065" target="_blank" class="btn btn-pill" style="background:#25d366;color:#fff;border:none">WhatsApp Your Design</a><button class="btn btn-dark btn-pill" onclick="openOv(\'enqOv\')">Upload File / Get Quote</button></div></div>';
@@ -1899,6 +1917,39 @@ function openService(cat){
   document.getElementById("spTitle").textContent=s.name;
   showPage("servicePage");
   updateNavCart();
+}
+
+/* ── Hamper Builder ── */
+var _hmpSel={},_hmpPkg='';
+function _hmpToggle(id){
+  if(_hmpSel[id])delete _hmpSel[id];else _hmpSel[id]=true;
+  var c=document.getElementById('hc-'+id);
+  if(c)c.classList.toggle('hmp-sel',!!_hmpSel[id]);
+  _hmpUpdate();
+}
+function _hmpPkgSel(pkg){
+  _hmpPkg=pkg;
+  document.querySelectorAll('.hmp-pkg-opt').forEach(function(b){b.classList.toggle('hmp-pkg-active',b.dataset.pkg===pkg);});
+  _hmpUpdate();
+}
+function _hmpUpdate(){
+  var ids=Object.keys(_hmpSel);
+  var cnt=ids.length;
+  var bar=document.getElementById('hmpBar');if(!bar)return;
+  var total=0;
+  ids.forEach(function(id){var p=getProd(parseInt(id));if(p)total+=p.price;});
+  var info=cnt?cnt+' item'+(cnt>1?'s':'')+' selected · Est. ₹'+total+'+ per kit':'Select items above to build your hamper';
+  document.getElementById('hmpBarTxt').textContent=info;
+  var btn=document.getElementById('hmpOrderBtn');
+  if(btn)btn.disabled=cnt===0;
+}
+function _hmpOrder(){
+  var ids=Object.keys(_hmpSel);
+  if(!ids.length)return;
+  var lines=ids.map(function(id){var p=getProd(parseInt(id));return p?'• '+p.e+' '+p.name+' (₹'+p.price+')':'';}).filter(Boolean);
+  var pkg=_hmpPkg?('\n\n📦 Packaging: '+_hmpPkg):'';
+  var msg='Hi! I want to build a Corporate Gift Hamper.\n\nItems I want:\n'+lines.join('\n')+pkg+'\n\nPlease share bulk pricing and availability.';
+  window.open('https://wa.me/917907254065?text='+encodeURIComponent(msg),'_blank');
 }
 
 function renderStoreReady(){
