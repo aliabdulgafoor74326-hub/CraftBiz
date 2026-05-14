@@ -1,12 +1,18 @@
-T-SHIRT PRINTING — Product Images
-===================================
-Drop your images into this folder with EXACTLY these filenames.
+T-SHIRT & APPAREL PRINTING — Product Images
+============================================
+Drop your images into THIS folder with EXACTLY these filenames.
 Supported formats: JPG, JPEG, PNG, WEBP
 
-  tshirt-printing.jpg         → Product #8  — T-Shirt Printing
-  cap-bag-printing.jpg        → Product #9  — Cap & Bag Printing
+  tshirt-printing.jpg          → Product #8   — T-Shirt Printing
+  cap-printing.jpg             → Product #9   — Cap Printing
+  tote-bag-apron.jpg           → Product #36  — Tote Bag / Apron Printing
 
-TIPS:
-• Recommended size: 800 × 600 px or larger (4:3 ratio)
+NOTE: Corporate T-Shirt (#35) also uses:
+  tshirt-printing.jpg          → same file, reused for corporate uniform
+
+TIPS
+----
+• Recommended size: 800 × 600 px (4:3 ratio)
 • Keep file size under 300 KB for fast loading
-• Use a plain/light background for clean product shots
+• Plain/light background · product centred · good lighting
+• If an image file is missing the website shows the emoji — nothing breaks

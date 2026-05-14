@@ -1,7 +1,7 @@
 {
   "files.associations": {
     "*.html": "html",
-    "*.css":  "css"
+    "*.css": "css"
   },
 
   "editor.formatOnSave": false,
@@ -12,29 +12,52 @@
     "html": "html"
   },
 
+  // ── Live Server ───────────────────────────────────────────────
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.port": 5500,
   "liveServer.settings.CustomBrowser": "chrome",
 
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.expand": false,
-  "explorer.fileNesting.patterns": {
-    "page 1.html": "craftbiz.css, .vscode",
-    "*.html": "${capture}.css, ${capture}.js",
-    "images": "images/laser, images/cnc, images/3d, images/tshirt, images/gifts, images/homedecor, images/wedding, images/resin, images/stationery, images/services, images/hero, images/blog"
-  },
-
+  // ── Explorer: hide clutter, nest related files ────────────────
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
+    "**/Thumbs.db": true,
+    "**/.claude": true
   },
 
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "index.html": "craftbiz.css, manifest.json, sw.js, CNAME, .nojekyll, README.md"
+  },
+
+  // ── Search / watcher ─────────────────────────────────────────
+  "search.exclude": {
+    "**/.git": true
+  },
   "files.watcherExclude": {
-    "**/images/**/*.jpg": false,
-    "**/images/**/*.png": false
+    "**/.git/**": true,
+    "**/images/**": false
   },
 
+  // ── Spellcheck whitelist ──────────────────────────────────────
+  "cSpell.words": [
+    "craftbiz", "tshirt", "homedecor",
+    "wa-float", "pc-img", "webp", "WEBP",
+    "topbar", "topnav", "mhdr", "xbtn", "ferr", "fsel",
+    "ftxt", "fcheck", "vbtn", "ptitle", "qchip", "grev",
+    "insta", "fbtn", "srch", "chdr", "csel", "bcol",
+    "bbar", "blbl", "cust", "tabular", "nums",
+    "colour", "colours", "Colour", "Colours", "COLOUR",
+    "Customise", "Customisation", "favourite", "personalised",
+    "Fibreboard", "Pantone", "yourname", "nojekyll",
+    "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
+    "ENDMAY", "NEWUSER",
+    "Malappuram", "Thrissur", "Kannur", "Kozhikode",
+    "Karnataka", "Telangana", "Andhra", "Pradesh"
+  ],
+
+  // ── Theme (Nothing Phone dark aesthetic) ─────────────────────
   "workbench.colorCustomizations": {
     "activityBar.background": "#0f0f0f",
     "sideBar.background": "#141414",
@@ -44,28 +67,5 @@
     "tab.activeBackground": "#1a1a1a",
     "tab.inactiveBackground": "#0d0d0d"
   },
-
-  "workbench.iconTheme": "material-icon-theme",
-
-  "cSpell.words": [
-    "craftbiz", "craftbizbiz", "tshirt", "homedecor",
-    "wa-float", "pc-img", "webp", "WEBP",
-    "topbar", "topnav", "mhdr", "xbtn", "ferr", "fsel",
-    "ftxt", "fcheck", "vbtn", "ptitle", "qchip", "grev",
-    "insta", "fbtn", "srch", "chdr", "csel", "bcol",
-    "bbar", "blbl", "cust", "tabular", "nums",
-    "colour", "colours", "Colour", "Colours", "COLOUR", "décor",
-    "Customise", "Customisation", "favourite", "specialise", "personalised",
-    "Fibreboard", "Pantone", "yourname",
-    "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
-    "ENDMAY", "NEWUSER",
-    "Arun", "Priya", "Fathima",
-    "Malappuram", "Thrissur", "Kannur", "Kozhikode",
-    "Karnataka", "Telangana", "Andhra",
-    "Pradesh", "Uttar", "Madhya", "Nadu"
-  ],
-
-  "search.exclude": {
-    "**/images/**": false
-  }
+  "workbench.iconTheme": "material-icon-theme"
 }

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "ritwickdey.liveserver",
+    "pkief.material-icon-theme",
+    "formulahendry.auto-rename-tag",
+    "ecmel.vscode-html-css",
+    "streetsidesoftware.code-spell-checker",
+    "mhutchie.git-graph"
+  ]
+}
