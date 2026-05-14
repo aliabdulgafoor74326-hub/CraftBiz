@@ -56,21 +56,59 @@
   "git.enableSmartCommit": true,
   "gitlens.hovers.currentLine.over": "line",
 
+  // ── Spellcheck: ignore Malayalam Unicode script ───────────────
+  "cSpell.ignoreRegExpList": [
+    "[\\u0D00-\\u0D7F]+"
+  ],
+
   // ── Spellcheck whitelist ──────────────────────────────────────
   "cSpell.words": [
-    "craftbiz", "tshirt", "homedecor",
-    "wa-float", "pc-img", "webp", "WEBP",
-    "topbar", "topnav", "mhdr", "xbtn", "ferr", "fsel",
-    "ftxt", "fcheck", "vbtn", "ptitle", "qchip", "grev",
-    "insta", "fbtn", "srch", "chdr", "csel", "bcol",
-    "bbar", "blbl", "cust", "tabular", "nums",
-    "colour", "colours", "Colour", "Colours", "COLOUR",
-    "Customise", "Customisation", "favourite", "personalised",
-    "Fibreboard", "Pantone", "yourname", "nojekyll",
+    // ── Project name & tech shorthand ───────────────────────────
+    "craftbiz", "ncraftbiz", "tshirt", "homedecor", "nojekyll",
+    "typeOpts", "gsm", "webp", "WEBP",
+
+    // ── CSS class name abbreviations ────────────────────────────
+    "topbar", "topnav", "metabar",
+    "mhdr", "xbtn", "ferr", "fsel", "ftxt", "fcheck",
+    "vbtn", "ptitle", "qchip", "grev",
+    "insta", "fbtn", "srch",
+    "chdr", "csel", "bcol", "bbar", "blbl",
+    "cust", "finp", "tabular", "nums",
+    "wa-float", "pc-img",
+
+    // ── British English (used throughout the site) ───────────────
+    "colour", "colours", "Colour", "Colours", "COLOUR", "Multicolour",
+    "Customise", "customise", "Customisation", "customisable",
+    "customised", "Customised",
+    "personalised", "Personalised",
+    "Jewellery", "favourite",
+
+    // ── Materials & printing terms ───────────────────────────────
+    "Fibreboard", "Pantone", "PETG", "GSTIN",
+    "yourname", "Tshirt",
+
+    // ── Payment & codes ──────────────────────────────────────────
     "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
-    "ENDMAY", "NEWUSER", "typeOpts", "gsm",
+    "ENDMAY", "NEWUSER", "NEWYEAR",
+
+    // ── Festivals ────────────────────────────────────────────────
+    "Holi", "HOLI", "Onam", "ONAM",
+
+    // ── Customer names (testimonials) ────────────────────────────
+    // ── More British English ─────────────────────────────────────
+    "specialise", "unauthorised", "aluminium", "Aluminium",
+    "décor",
+
+    // ── UPI / payment IDs ────────────────────────────────────────
+    "craftbizbiz",
+
+    // ── Customer names (testimonials) ────────────────────────────
+    "Rajan", "Anand", "Priya", "Fathima", "Arun",
+
+    // ── Kerala & India place names ───────────────────────────────
     "Malappuram", "Thrissur", "Kannur", "Kozhikode",
-    "Karnataka", "Telangana", "Andhra", "Pradesh"
+    "Karnataka", "Telangana", "Andhra", "Pradesh",
+    "Nadu", "Uttar", "Madhya"
   ],
 
   // ── Theme (Craft Biz dark / Nothing Phone aesthetic) ──────────

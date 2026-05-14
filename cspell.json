@@ -1,0 +1,50 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignoreRegExpList": [
+    "[\\u0D00-\\u0D7F]+"
+  ],
+  "words": [
+    "craftbiz", "ncraftbiz", "tshirt", "homedecor", "nojekyll",
+    "typeOpts", "gsm", "webp", "WEBP",
+
+    "topbar", "topnav", "metabar",
+    "mhdr", "xbtn", "ferr", "fsel", "ftxt", "fcheck",
+    "vbtn", "ptitle", "qchip", "grev",
+    "insta", "fbtn", "srch",
+    "chdr", "csel", "bcol", "bbar", "blbl",
+    "cust", "finp", "tabular", "nums",
+    "wa-float", "pc-img",
+
+    "colour", "colours", "Colour", "Colours", "COLOUR", "Multicolour",
+    "Customise", "customise", "Customisation", "customisable",
+    "customised", "Customised",
+    "personalised", "Personalised",
+    "Jewellery", "favourite",
+
+    "Fibreboard", "Pantone", "PETG", "GSTIN",
+    "yourname", "Tshirt",
+
+    "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
+    "ENDMAY", "NEWUSER", "NEWYEAR",
+
+    "Holi", "HOLI", "Onam", "ONAM",
+
+    "specialise", "unauthorised", "aluminium", "Aluminium",
+    "décor",
+
+    "craftbizbiz",
+
+    "Rajan", "Anand", "Priya", "Fathima", "Arun",
+
+    "Malappuram", "Thrissur", "Kannur", "Kozhikode",
+    "Karnataka", "Telangana", "Andhra", "Pradesh",
+    "Nadu", "Uttar", "Madhya"
+  ],
+  "ignorePaths": [
+    ".git",
+    ".claude",
+    "node_modules",
+    "images"
+  ]
+}
