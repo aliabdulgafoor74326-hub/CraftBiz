@@ -1861,7 +1861,7 @@ function openService(cat){
   }
 
   /* ready products */
-  var secTitle=cat==='gifts'?'Order Individual Items':'Ready to Ship';
+  var secTitle=cat==='gifts'?'Order Individual Items':cat==='tshirt'?'Customise & Order':'Ready to Ship';
   h+='<div class="sp-products-section"><h2 class="sp-sec-title">'+secTitle+'</h2>';
   if(ready.length){
     h+='<div class="prod-grid" style="margin-top:1.2rem">';
@@ -1872,7 +1872,8 @@ function openService(cat){
       h+='<div class="pc-img" style="background:'+bg+'">';
       if(pImgs.length){h+='<img src="'+pImgs[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}
       h+='<div class="pc-img-ph" style="'+(pImgs.length?'display:none':'')+'">'+p.e+'</div>';
-      h+='<div class="pc-flag bdg-gn">Ready</div><div class="pc-stock">In Stock</div>';
+      var spFlag=cat==='tshirt'?'<div class="pc-flag bdg-dk">Custom</div><div class="pc-stock">Made to Order</div>':cat==='gifts'?'<div class="pc-flag '+p.badge+'">'+p.badgeTxt+'</div><div class="pc-stock">Made to Order</div>':'<div class="pc-flag bdg-gn">Ready</div><div class="pc-stock">In Stock</div>';
+      h+=spFlag;
       h+='<div class="pc-wish'+(isInWl(p.id)?' active':'')+'\" onclick="event.stopPropagation();toggleWl('+p.id+')" id="spw-'+p.id+'">♡</div>';
       h+='</div><div class="pc-body"><div class="pc-cat">'+s.name+'</div><div class="pc-name">'+p.name+'</div>';
       if(p.specs)h+='<div class="pc-specs">'+p.specs+'</div>';
@@ -1977,7 +1978,7 @@ function _hmpOrder(){
 function renderStoreReady(){
   var g=document.getElementById("storeReadyGrid");
   if(!g)return;
-  var ready=PRODUCTS.filter(function(p){return p.ready;}).slice(0,8);
+  var ready=PRODUCTS.filter(function(p){return p.ready&&p.cat!=='tshirt'&&p.cat!=='gifts';}).slice(0,8);
   var html="";
   ready.forEach(function(p,i){
     var bg=BG[i%BG.length];
@@ -3362,7 +3363,7 @@ renderProducts=function(){
   list.forEach(function(p,i){
     var bg=BG_arr[i%BG_arr.length]||'#f0f0ee';
     var offPct=p.orig>0?Math.round((1-p.price/p.orig)*100):0;
-    var stockTxt=p.cat==='gifts'?'Made to Order':p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
+    var stockTxt=(p.cat==='gifts'||p.cat==='tshirt')?'Made to Order':p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
     var listDesc=isListView?'<div style="font-size:.74rem;color:var(--mid);line-height:1.6;margin-bottom:.4rem">'+p.desc+'</div>':"";
     html+='<div class="pc" onclick="openProduct('+p.id+')">';
     html+='<div class="pc-img" style="background:'+bg+'">';
