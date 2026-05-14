@@ -1564,7 +1564,7 @@ var PRODUCTS=[
   {id:25,e:"🍶",name:"Customised Bottle",cat:"gifts",imgs:["images/gifts/custom-bottle.jpg"],badge:"bdg-gn",badgeTxt:"New",desc:"Sublimation printed stainless steel / sipper bottles. Company name, logo or individual name.",price:280,orig:350,note:"per bottle",rating:4.7,rc:48,stock:"in",ready:true},
   {id:26,e:"👜",name:"Branded Carry Bag",cat:"gifts",imgs:["images/gifts/carry-bag.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Non-woven, jute or canvas carry bags with company name & logo screen / digital printed.",price:55,orig:80,note:"per bag · min 50",rating:4.6,rc:112,stock:"in",ready:true},
   {id:27,e:"📦",name:"Printed Gift Box",cat:"gifts",imgs:["images/gifts/gift-box.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Rigid or folding gift boxes with full-colour brand printing. Perfect for hamper packing.",price:130,orig:0,note:"per box · size-based",rating:4.7,rc:67,stock:"in",ready:true},
-  {id:28,e:"💌",name:"Welcome / Greeting Card",cat:"gifts",imgs:["images/gifts/greeting-card.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Custom printed welcome cards and greeting cards with company branding. Design included.",price:30,orig:0,note:"per card · min 20",rating:4.8,rc:95,stock:"in",ready:true},
+  {id:28,e:"💌",name:"Welcome / Greeting Card",cat:"gifts",imgs:["images/gifts/greeting-card.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Custom printed welcome cards and greeting cards with company branding. Design included.",price:30,orig:0,note:"per card · min 20",rating:4.8,rc:95,stock:"in",ready:true,gsm:[{v:120,p:30},{v:180,p:38},{v:220,p:45},{v:300,p:55},{v:400,p:70}]},
   {id:29,e:"🔖",name:"Custom Bookmark",cat:"gifts",imgs:["images/gifts/bookmark.jpg"],badge:"bdg-gn",badgeTxt:"New",desc:"Acrylic, leather or laminated bookmarks with name, logo or motivational print.",price:40,orig:0,note:"per piece",rating:4.6,rc:34,stock:"in",ready:true},
   {id:30,e:"🔑",name:"Sublimation Keychain",cat:"gifts",imgs:["images/gifts/keychain.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Sublimation printed keychains with name, photo or company logo. Metal & acrylic options.",price:60,orig:90,note:"per piece",rating:4.7,rc:178,stock:"in",ready:true},
   {id:31,e:"🏷️",name:"Company Sticker Pack",cat:"gifts",imgs:["images/stationery/sticker-printing.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Die-cut vinyl stickers with company branding. For packaging, merchandise and gifting.",price:15,orig:0,note:"per sticker · min 50",rating:4.7,rc:203,stock:"in",ready:true},
@@ -1944,6 +1944,17 @@ function _hmpUpdate(){
   var btn=document.getElementById('hmpOrderBtn');
   if(btn)btn.disabled=cnt===0;
 }
+var _curGsm=0;
+function _gsmSel(gsm,price){
+  _curGsm=gsm;
+  var pn=document.getElementById('pdPriceNum');if(pn)pn.textContent=price;
+  var pNote=document.getElementById('pdPriceNote');if(pNote)pNote.textContent=gsm+' GSM · per card · min 20';
+}
+function _giftOrderWA(name){
+  var gsmEl=document.querySelector('.gsm-btn.sel');
+  var extra=gsmEl?'\nPaper Thickness: '+gsmEl.dataset.gsm+' GSM (₹'+gsmEl.dataset.price+'/card)':'';
+  window.open('https://wa.me/917907254065?text='+encodeURIComponent('Hi, I want to customise: '+name+extra+'\nPlease guide me on pricing and design upload.'),'_blank');
+}
 function _hmpOrder(){
   var ids=Object.keys(_hmpSel);
   if(!ids.length)return;
@@ -1996,7 +2007,7 @@ function openProduct(id){
   html+='<div class="pd-info"><div class="pd-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
   html+='<div class="pd-name">'+p.name+'</div>';
   html+='<div class="pd-rat-row"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' · '+p.rc+' reviews</span></div>';
-  html+='<div class="pd-price-box"><div class="pd-price-lbl">Starting from</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note">'+p.note+'</div></div>';
+  html+='<div class="pd-price-box"><div class="pd-price-lbl">'+(p.gsm?'Price changes with paper thickness':'Starting from')+'</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span><span id="pdPriceNum">'+p.price+'</span></span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note" id="pdPriceNote">'+p.note+'</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="ts-cfg">';
     /* garment */
@@ -2022,6 +2033,13 @@ function openProduct(id){
     html+='</div>';
   } else {
     html+='<div class="pd-var"><div class="pd-var-lbl">Quantity:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">1 Piece</button><button class="pd-vbtn" onclick="selVar(this)">2–9 Pcs</button><button class="pd-vbtn" onclick="selVar(this)">10+ Bulk</button></div></div>';
+    if(p.gsm){
+      html+='<div class="pd-var gsm-req" id="gsmRow"><div class="pd-var-lbl">Paper Thickness <span class="req-star">*</span></div><div class="pd-var-opts">';
+      p.gsm.forEach(function(g){
+        html+='<button class="pd-vbtn gsm-btn" data-gsm="'+g.v+'" data-price="'+g.p+'" onclick="selVar(this);_gsmSel('+g.v+','+g.p+')">'+g.v+' GSM<br><span style="font-size:.65rem;font-weight:800;color:var(--accent)">₹'+g.p+'</span></button>';
+      });
+      html+='</div><div style="font-size:.68rem;color:var(--mid);margin-top:.3rem">Select paper weight — higher GSM = thicker, premium feel</div></div>';
+    }
     if(p.cat==="laser"||p.cat==="cnc"){
       html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';
       html+='<div class="pd-var"><div class="pd-var-lbl">Acrylic Colour:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Transparent</button><button class="pd-vbtn" onclick="selVar(this)">Milky White</button><button class="pd-vbtn" onclick="selVar(this)">Black</button><button class="pd-vbtn" onclick="selVar(this)">Custom Colour</button></div></div>';
@@ -2032,7 +2050,7 @@ function openProduct(id){
   if(p.cat==='tshirt'){
     html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
   } else if(p.cat==='gifts'){
-    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+want+to+customise:+'+encodeURIComponent(p.name)+'.+Please+guide+me.\',\'_blank\')">WhatsApp for Quote</button></div>';
+    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_giftOrderWA(\''+p.name.replace(/['"]/g,"")+'\')">WhatsApp for Quote</button></div>';
   } else {
     html+='<div class="pd-actions"><button class="pd-atc" onclick="addToCart('+p.id+');closeOv(\'pdOv\')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Enquire / Custom Order</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+am+interested+in:+'+encodeURIComponent(p.name)+'\')">WhatsApp us</button></div>';
   }
