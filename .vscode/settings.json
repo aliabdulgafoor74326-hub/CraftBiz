@@ -1,23 +1,35 @@
 {
+  // ── File associations ─────────────────────────────────────────
   "files.associations": {
     "*.html": "html",
     "*.css": "css"
   },
 
-  "editor.formatOnSave": false,
+  // ── Editor behaviour ──────────────────────────────────────────
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
+  "editor.formatOnSave": false,
+  "editor.linkedEditing": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.stickyScroll.enabled": true,
+  "editor.minimap.enabled": true,
+  "editor.minimap.maxColumn": 80,
+  "editor.rulers": [120],
+  "editor.scrollBeyondLastLine": false,
+  "editor.foldingImportsByDefault": true,
 
-  "emmet.includeLanguages": {
-    "html": "html"
-  },
+  // ── Emmet (HTML auto-complete) ────────────────────────────────
+  "emmet.includeLanguages": { "html": "html" },
+  "emmet.triggerExpansionOnTab": true,
 
   // ── Live Server ───────────────────────────────────────────────
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.port": 5500,
   "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.NoBrowser": false,
 
-  // ── Explorer: hide clutter, nest related files ────────────────
+  // ── Explorer: hide clutter ────────────────────────────────────
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
@@ -25,20 +37,24 @@
     "**/.claude": true
   },
 
+  // ── File nesting: only collapse config files under index.html ─
+  //    craftbiz.css stays visible so you can open it directly
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "index.html": "craftbiz.css, manifest.json, sw.js, CNAME, .nojekyll, README.md"
+    "index.html": "manifest.json, sw.js, CNAME, .nojekyll, README.md"
   },
 
-  // ── Search / watcher ─────────────────────────────────────────
+  // ── Search ────────────────────────────────────────────────────
   "search.exclude": {
     "**/.git": true
   },
-  "files.watcherExclude": {
-    "**/.git/**": true,
-    "**/images/**": false
-  },
+
+  // ── Git ───────────────────────────────────────────────────────
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "gitlens.hovers.currentLine.over": "line",
 
   // ── Spellcheck whitelist ──────────────────────────────────────
   "cSpell.words": [
@@ -52,20 +68,27 @@
     "Customise", "Customisation", "favourite", "personalised",
     "Fibreboard", "Pantone", "yourname", "nojekyll",
     "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
-    "ENDMAY", "NEWUSER",
+    "ENDMAY", "NEWUSER", "typeOpts", "gsm",
     "Malappuram", "Thrissur", "Kannur", "Kozhikode",
     "Karnataka", "Telangana", "Andhra", "Pradesh"
   ],
 
-  // ── Theme (Nothing Phone dark aesthetic) ─────────────────────
+  // ── Theme (Craft Biz dark / Nothing Phone aesthetic) ──────────
   "workbench.colorCustomizations": {
     "activityBar.background": "#0f0f0f",
     "sideBar.background": "#141414",
+    "sideBarSectionHeader.background": "#1a1a1a",
     "statusBar.background": "#c8401a",
     "statusBar.foreground": "#ffffff",
+    "statusBarItem.hoverBackground": "#a83516",
     "editorGroupHeader.tabsBackground": "#111111",
     "tab.activeBackground": "#1a1a1a",
-    "tab.inactiveBackground": "#0d0d0d"
+    "tab.inactiveBackground": "#0d0d0d",
+    "tab.activeBorderTop": "#c8401a",
+    "editor.lineHighlightBackground": "#1a1a1a",
+    "titleBar.activeBackground": "#0f0f0f",
+    "titleBar.activeForeground": "#ffffff"
   },
-  "workbench.iconTheme": "material-icon-theme"
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.editor.enablePreview": false
 }

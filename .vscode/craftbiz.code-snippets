@@ -1,0 +1,46 @@
+{
+  // ─────────────────────────────────────────────────────────────
+  //  Craft Biz — custom snippets for index.html
+  //
+  //  HOW TO USE:
+  //    1. Open index.html
+  //    2. Place cursor inside the PRODUCTS [ ] array
+  //    3. Type the snippet prefix and press Tab
+  // ─────────────────────────────────────────────────────────────
+
+  "New basic product": {
+    "scope": "html",
+    "prefix": "prod",
+    "description": "Add a new basic product to PRODUCTS array",
+    "body": [
+      "{id:${1:99},e:\"${2:🎁}\",name:\"${3:Product Name}\",cat:\"${4|laser,cnc,3d,tshirt,gifts,homedecor,wedding,resin,stationery|}\",imgs:[\"images/${4}/${5:filename}.jpg\"],badge:\"${6|bdg-ac,bdg-dk,bdg-gn|}\",badgeTxt:\"${7|Popular,Custom,New|}\",desc:\"${8:Short product description.}\",price:${9:100},orig:${10:0},note:\"${11:per piece}\",rating:${12:4.7},rc:${13:50},stock:\"in\",ready:${14|true,false|}},$0"
+    ]
+  },
+
+  "New product with GSM options (cards/paper)": {
+    "scope": "html",
+    "prefix": "prodgsm",
+    "description": "Add a product that has GSM paper thickness selector",
+    "body": [
+      "{id:${1:99},e:\"${2:💌}\",name:\"${3:Card / Print Name}\",cat:\"${4|gifts,stationery|}\",imgs:[\"images/${4}/${5:filename}.jpg\"],badge:\"${6|bdg-dk,bdg-ac,bdg-gn|}\",badgeTxt:\"${7|Custom,Popular,New|}\",desc:\"${8:Description.}\",price:${9:30},orig:0,note:\"${10:per card · min 20}\",rating:${11:4.8},rc:${12:50},stock:\"in\",ready:true,gsm:[{v:120,p:${13:30}},{v:180,p:${14:38}},{v:220,p:${15:45}},{v:300,p:${16:55}},{v:400,p:${17:70}}]},$0"
+    ]
+  },
+
+  "New product with type options (variants)": {
+    "scope": "html",
+    "prefix": "prodtype",
+    "description": "Add a product with selectable type variants (like mug types)",
+    "body": [
+      "{id:${1:99},e:\"${2:🏺}\",name:\"${3:Product Name}\",cat:\"${4|gifts,laser,stationery|}\",imgs:[\"images/${4}/${5:filename}.jpg\"],badge:\"${6|bdg-dk,bdg-ac,bdg-gn|}\",badgeTxt:\"${7|Custom,Popular,New|}\",desc:\"${8:Description.}\",price:${9:100},orig:0,note:\"${10:per piece}\",rating:${11:4.7},rc:${12:50},stock:\"in\",ready:true,typeOpts:{label:\"${13:Select Type}\",opts:[{label:\"${14:Option A}\",sub:\"${15:Description A}\",price:${16:100}},{label:\"${17:Option B}\",sub:\"${18:Description B}\",price:${19:150}},{label:\"${20:Option C}\",sub:\"${21:Description C}\",price:${22:200}}]}},$0"
+    ]
+  },
+
+  "New image path": {
+    "scope": "html",
+    "prefix": "img",
+    "description": "Insert an images/ path for a product",
+    "body": [
+      "images/${1|laser,cnc,3d,tshirt,gifts,homedecor,wedding,resin,stationery,logo,hero|}/${2:filename}.${3|jpg,png,webp|}$0"
+    ]
+  }
+}

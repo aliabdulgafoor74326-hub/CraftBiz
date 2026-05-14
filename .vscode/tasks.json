@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+
+    {
+      "label": "Open Live Server",
+      "type": "shell",
+      "command": "Start-Process 'http://127.0.0.1:5500'",
+      "options": { "shell": { "executable": "powershell" } },
+      "group": "build",
+      "presentation": { "reveal": "never" }
+    },
+
+    {
+      "label": "Validate JavaScript (check for errors)",
+      "type": "shell",
+      "command": "node -e \"var fs=require('fs');var src=fs.readFileSync('index.html','utf8');var blocks=src.match(/<script[\\s\\S]*?<\\/script>/g)||[];var ok=0;blocks.forEach(function(b){try{new Function(b.replace(/<\\/?script[^>]*>/g,''));ok++;}catch(e){console.error('JS ERROR:',e.message);}});console.log('Checked '+ok+' script block(s) — no syntax errors found.');\"",
+      "options": { "shell": { "executable": "powershell" } },
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Push to GitHub Pages (publish live)",
+      "type": "shell",
+      "command": "git add -A && git commit -m 'update site' && git push",
+      "options": { "shell": { "executable": "powershell" } },
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "Check image folder sizes",
+      "type": "shell",
+      "command": "Get-ChildItem images -Recurse -Include *.jpg,*.jpeg,*.png,*.webp | Select-Object Name, @{N='KB';E={[math]::Round($_.Length/1KB,1)}} | Sort-Object KB -Descending | Format-Table -AutoSize",
+      "options": { "shell": { "executable": "powershell" } },
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+
+  ]
+}

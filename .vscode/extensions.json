@@ -5,6 +5,8 @@
     "formulahendry.auto-rename-tag",
     "ecmel.vscode-html-css",
     "streetsidesoftware.code-spell-checker",
-    "mhutchie.git-graph"
+    "mhutchie.git-graph",
+    "wayou.vscode-todo-highlight",
+    "naumovs.color-highlight"
   ]
 }
