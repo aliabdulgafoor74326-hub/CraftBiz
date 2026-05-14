@@ -2017,7 +2017,8 @@ function openProduct(id){
   html+='<div class="pd-info"><div class="pd-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
   html+='<div class="pd-name">'+p.name+'</div>';
   html+='<div class="pd-rat-row"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' · '+p.rc+' reviews</span></div>';
-  html+='<div class="pd-price-box"><div class="pd-price-lbl">'+(p.gsm?'Price changes with paper thickness':'Starting from')+'</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span><span id="pdPriceNum">'+p.price+'</span></span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note" id="pdPriceNote">'+p.note+'</div></div>';
+  var priceLbl=p.gsm?'Price changes with paper thickness':p.typeOpts?'Price changes with type selected':'Starting from';
+  html+='<div class="pd-price-box"><div class="pd-price-lbl">'+priceLbl+'</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span><span id="pdPriceNum">'+p.price+'</span></span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note" id="pdPriceNote">'+p.note+'</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="ts-cfg">';
     /* garment */
@@ -2091,8 +2092,7 @@ function selVar(el){el.parentNode.querySelectorAll(".pd-vbtn").forEach(function(
 function pcAddToCart(id){
   var p=getProd(id);
   if(!p)return;
-  if(p.cat==='tshirt'){openProduct(id);}
-  else if(p.cat==='gifts'){openEnq(p.name);}
+  if(p.cat==='tshirt'||p.cat==='gifts'){openProduct(id);}
   else{addToCart(id);}
 }
 
