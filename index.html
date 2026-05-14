@@ -1560,7 +1560,7 @@ var PRODUCTS=[
   {id:9,e:"🧢",name:"Cap Printing",cat:"gifts",imgs:["images/tshirt/cap-bag-printing.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Sublimation & DTF print on caps. Add company name, logo or any design.",price:120,orig:0,note:"per cap",rating:4.5,rc:63,stock:"in",ready:true},
   {id:36,e:"👜",name:"Tote Bag / Apron Printing",cat:"gifts",imgs:["images/tshirt/cap-bag-printing.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"DTF & sublimation print on canvas tote bags and aprons. Company name, logo or custom design.",price:110,orig:0,note:"per piece",rating:4.5,rc:41,stock:"in",ready:true},
   {id:10,e:"🎁",name:"Corporate Gift Package",cat:"gifts",imgs:["images/gifts/corporate-gift.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Fully customised corporate gift hamper. Mix & match any items — mug, pen, diary, keychain, box and more. Bulk pricing available.",price:499,orig:700,note:"per kit · custom",rating:4.8,rc:156,stock:"in",ready:true},
-  {id:11,e:"☕",name:"Customised Mug / Cup",cat:"gifts",imgs:["images/gifts/mug-printing.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Full-colour sublimation on ceramic mugs. Name, photo, company logo.",price:180,orig:250,note:"per mug",rating:4.8,rc:284,stock:"in",ready:true},
+  {id:11,e:"☕",name:"Customised Mug / Cup",cat:"gifts",imgs:["images/gifts/mug-printing.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Full-colour sublimation on ceramic mugs. Name, photo, company logo.",price:180,orig:250,note:"per mug",rating:4.8,rc:284,stock:"in",ready:true,typeOpts:{label:"Mug Type",opts:[{label:"Plain White Mug",sub:"Standard white ceramic · sublimation print",price:180},{label:"Coloured Mug",sub:"Coloured inner & handle · all colours same rate",price:220},{label:"Magic Mug",sub:"Heat-sensitive · reveals design when hot",price:280}]}},
   {id:25,e:"🍶",name:"Customised Bottle",cat:"gifts",imgs:["images/gifts/custom-bottle.jpg"],badge:"bdg-gn",badgeTxt:"New",desc:"Sublimation printed stainless steel / sipper bottles. Company name, logo or individual name.",price:280,orig:350,note:"per bottle",rating:4.7,rc:48,stock:"in",ready:true},
   {id:26,e:"👜",name:"Branded Carry Bag",cat:"gifts",imgs:["images/gifts/carry-bag.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Non-woven, jute or canvas carry bags with company name & logo screen / digital printed.",price:55,orig:80,note:"per bag · min 50",rating:4.6,rc:112,stock:"in",ready:true},
   {id:27,e:"📦",name:"Printed Gift Box",cat:"gifts",imgs:["images/gifts/gift-box.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Rigid or folding gift boxes with full-colour brand printing. Perfect for hamper packing.",price:130,orig:0,note:"per box · size-based",rating:4.7,rc:67,stock:"in",ready:true},
@@ -1944,15 +1944,25 @@ function _hmpUpdate(){
   var btn=document.getElementById('hmpOrderBtn');
   if(btn)btn.disabled=cnt===0;
 }
-var _curGsm=0;
+var _curGsm=0,_curType='';
 function _gsmSel(gsm,price){
   _curGsm=gsm;
   var pn=document.getElementById('pdPriceNum');if(pn)pn.textContent=price;
   var pNote=document.getElementById('pdPriceNote');if(pNote)pNote.textContent=gsm+' GSM · per card · min 20';
 }
+function _typeSel(el,price,label){
+  document.querySelectorAll('.type-opt').forEach(function(b){b.classList.remove('type-sel');});
+  el.classList.add('type-sel');
+  _curType=label;
+  var pn=document.getElementById('pdPriceNum');if(pn)pn.textContent=price;
+  var pNote=document.getElementById('pdPriceNote');if(pNote)pNote.textContent=label+' · per mug';
+}
 function _giftOrderWA(name){
   var gsmEl=document.querySelector('.gsm-btn.sel');
-  var extra=gsmEl?'\nPaper Thickness: '+gsmEl.dataset.gsm+' GSM (₹'+gsmEl.dataset.price+'/card)':'';
+  var typeEl=document.querySelector('.type-opt.type-sel');
+  var extra='';
+  if(gsmEl)extra+='\nPaper Thickness: '+gsmEl.dataset.gsm+' GSM (₹'+gsmEl.dataset.price+'/card)';
+  if(typeEl){var tp=typeEl.querySelector('.type-price');extra+='\nMug Type: '+_curType+(tp?' ('+tp.textContent+')':'');}
   window.open('https://wa.me/917907254065?text='+encodeURIComponent('Hi, I want to customise: '+name+extra+'\nPlease guide me on pricing and design upload.'),'_blank');
 }
 function _hmpOrder(){
@@ -2039,6 +2049,17 @@ function openProduct(id){
         html+='<button class="pd-vbtn gsm-btn" data-gsm="'+g.v+'" data-price="'+g.p+'" onclick="selVar(this);_gsmSel('+g.v+','+g.p+')">'+g.v+' GSM<br><span style="font-size:.65rem;font-weight:800;color:var(--accent)">₹'+g.p+'</span></button>';
       });
       html+='</div><div style="font-size:.68rem;color:var(--mid);margin-top:.3rem">Select paper weight — higher GSM = thicker, premium feel</div></div>';
+    }
+    if(p.typeOpts){
+      var to=p.typeOpts;
+      html+='<div class="pd-var" id="typeRow"><div class="pd-var-lbl">'+to.label+' <span class="req-star">*</span></div><div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.4rem">';
+      to.opts.forEach(function(o,idx){
+        html+='<div class="type-opt'+(idx===0?' type-sel':'')+'" data-price="'+o.price+'" onclick="_typeSel(this,'+o.price+',\''+o.label+'\')">';
+        html+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:.82rem">'+o.label+'</span><span class="type-price" style="font-size:.85rem;font-weight:800;color:var(--accent)">₹'+o.price+'</span></div>';
+        html+='<div style="font-size:.68rem;color:var(--mid);margin-top:.15rem">'+o.sub+'</div>';
+        html+='</div>';
+      });
+      html+='</div></div>';
     }
     if(p.cat==="laser"||p.cat==="cnc"){
       html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';

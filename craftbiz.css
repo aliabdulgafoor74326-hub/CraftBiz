@@ -1775,3 +1775,20 @@ body.dark .hmp-bar { background: #000; border: 1px solid rgba(255,255,255,.1); }
 }
 .hmp-bar-btn:disabled { opacity: .4; cursor: not-allowed; }
 .hmp-bar-btn:not(:disabled):active { transform: scale(.96); }
+
+/* ── Product type option cards (mug type, etc.) ── */
+.type-opt {
+  border: 2px solid var(--bdr);
+  border-radius: 10px;
+  padding: .65rem .85rem;
+  cursor: pointer;
+  transition: border-color .18s, background .18s;
+  background: #fff;
+}
+body.dark .type-opt { background: #181818; border-color: rgba(255,255,255,.1); }
+.type-opt:active { transform: scale(.98); }
+.type-opt.type-sel {
+  border-color: var(--accent);
+  background: #fff5ec;
+}
+body.dark .type-opt.type-sel { background: rgba(255,120,0,.12); }
