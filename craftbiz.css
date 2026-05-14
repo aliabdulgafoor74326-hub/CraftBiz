@@ -1368,6 +1368,75 @@ body.on-landing .wa-float{opacity:0;pointer-events:none;}
 .inv-policy-lbl    { font-weight:700; color:#333; display:block; margin-bottom:.12rem; }
 
 /* ══════════════════════════════════════════════
+   DARK MODE
+══════════════════════════════════════════════ */
+body.dark { --white:#1a1a1a; --off:#222; --bg:#181818; --bdr:#333; --bdr2:#444; --mid:#bbb; --muted:#888; --black:#f0f0f0; background:#121212; color:#f0f0f0; }
+body.dark .topnav { background:rgba(10,10,10,.95); }
+body.dark .pc { background:#1e1e1e; border-color:#333; }
+body.dark .pc-body { background:#1e1e1e; }
+body.dark .modal { background:#1e1e1e; }
+body.dark .fi { background:#2a2a2a; border-color:#444; color:#f0f0f0; }
+body.dark .btn-white { background:#2a2a2a; color:#f0f0f0; }
+body.dark footer { background:#0a0a0a; }
+body.dark .cat-bar { background:#1a1a1a; border-color:#333; }
+body.dark .shop-body { background:#121212; }
+body.dark .srv-card { background:#1e1e1e; border-color:#333; }
+body.dark .tc { background:#1e1e1e; border-color:#333; }
+body.dark .blog-card { background:#1e1e1e; border-color:#333; }
+body.dark .why-card { background:#1e1e1e; border-color:#333; }
+body.dark .ck-page { background:#121212; }
+body.dark .ck-box { background:#1e1e1e; border-color:#333; }
+body.dark .ord-sum { background:#1e1e1e; border-color:#333; }
+body.dark .mhdr { background:#1e1e1e; border-color:#333; }
+body.dark .srch-inp { background:#2a2a2a; color:#f0f0f0; border-color:#444; }
+body.dark .gal-card { background:#1e1e1e; border-color:#333; }
+body.dark .sec { background:#1a1a1a !important; }
+body.dark .sec-title { color:#f0f0f0; }
+body.dark .sec-sub { color:#bbb; }
+
+/* ══════════════════════════════════════════════
+   PRODUCT SEARCH
+══════════════════════════════════════════════ */
+.srch-wrap { position:relative; flex:1; max-width:280px; }
+.srch-inp { width:100%; padding:.45rem .9rem .45rem 2rem; border:1.5px solid var(--bdr); border-radius:100px; font-size:.76rem; outline:none; background:var(--white); transition:border-color .18s; }
+.srch-inp:focus { border-color:var(--black); }
+.srch-wrap::before { content:'🔍'; position:absolute; left:.65rem; top:50%; transform:translateY(-50%); font-size:.72rem; pointer-events:none; }
+
+/* ══════════════════════════════════════════════
+   GET QUOTE FLOATING BUTTON
+══════════════════════════════════════════════ */
+.quote-float { position:fixed; bottom:5.5rem; left:1.5rem; z-index:9997; background:var(--black); color:var(--white); border-radius:50px; display:flex; align-items:center; gap:.4rem; padding:.65rem 1rem .65rem .8rem; box-shadow:0 4px 20px rgba(0,0,0,.25); font-size:.75rem; font-weight:600; cursor:pointer; transition:transform .2s,box-shadow .2s,opacity .3s; text-decoration:none; }
+.quote-float:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,0,0,.35); }
+body.on-landing .quote-float { opacity:0; pointer-events:none; }
+@media(max-width:480px) { .quote-float .quote-float-label { display:none; } .quote-float { padding:.75rem; border-radius:50%; } }
+
+/* ══════════════════════════════════════════════
+   RECENTLY VIEWED
+══════════════════════════════════════════════ */
+.recent-sec { border-top:1px solid var(--bdr); }
+.recent-row { display:flex; gap:.75rem; overflow-x:auto; scrollbar-width:none; padding-bottom:.5rem; }
+.recent-row::-webkit-scrollbar { display:none; }
+.recent-row .pc { min-width:160px; max-width:160px; flex-shrink:0; }
+
+/* ══════════════════════════════════════════════
+   WHATSAPP SHARE BUTTON
+══════════════════════════════════════════════ */
+.pc-share { width:100%; margin-top:.3rem; padding:.35rem; background:transparent; border:1px solid var(--bdr); border-radius:var(--r); font-size:.66rem; color:var(--muted); cursor:pointer; transition:all .18s; }
+.pc-share:hover { border-color:#25d366; color:#25d366; }
+
+/* ══════════════════════════════════════════════
+   GALLERY PAGE
+══════════════════════════════════════════════ */
+.gal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; margin-bottom:1.5rem; }
+.gal-card { aspect-ratio:1/1; border-radius:var(--r2); background:var(--off); border:1px solid var(--bdr); display:flex; align-items:center; justify-content:center; font-size:3rem; cursor:pointer; overflow:hidden; transition:all .22s; position:relative; }
+.gal-card:hover { transform:translateY(-3px); box-shadow:var(--md); }
+.gal-card img { width:100%;height:100%;object-fit:cover;position:absolute;inset:0; }
+.gal-lbl { position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.68rem;font-weight:600;padding:.5rem .7rem;opacity:0;transition:opacity .22s; }
+.gal-card:hover .gal-lbl { opacity:1; }
+@media(max-width:768px){ .gal-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:400px){ .gal-grid{grid-template-columns:repeat(2,1fr);} }
+
+/* ══════════════════════════════════════════════
    PRINT — A5 Invoice / Receipt
    148mm × 210mm · portrait
 ══════════════════════════════════════════════ */

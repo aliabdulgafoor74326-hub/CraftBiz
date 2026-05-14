@@ -102,6 +102,12 @@ function enterAndScroll(sec){
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="craftbiz.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c8401a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Craft Biz">
 </head>
 <body>
 
@@ -155,7 +161,7 @@ function enterAndScroll(sec){
       </div>
       <div class="fg"><label class="fl">Details / Customisation</label><textarea class="fi ftxt" id="enqMsg" placeholder="Describe colour, size, text, design reference, deadline..."></textarea></div>
       <div class="fg">
-        <label class="fl">Attach File (PNG, JPG, PDF, STL, DXF, AI, SVG)</label>
+        <label class="fl">Attach File (PNG, JPG, PDF, STL, DXF, AI, SVG) — <a onclick="closeOv('enqOv');openOv('fileGuideOv')" style="color:var(--black);font-weight:700;cursor:pointer;font-size:.68rem">File Format Guide ↗</a></label>
         <div class="fup" onclick="document.getElementById('enqFile').click()">
           <input type="file" id="enqFile" multiple accept="image/*,.pdf,.stl,.dxf,.ai,.svg,.eps,.step" onchange="handleFiles(this,'enqFilePrev')">
           <div class="fup-ico">📎</div>
@@ -240,7 +246,7 @@ function enterAndScroll(sec){
       <div class="conf-totals" id="confTotals"></div>
       <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem">
         <button class="btn btn-dark btn-pill" onclick="closeOv('confirmOv');showPage('storePage')">Continue Shopping</button>
-        <button class="btn btn-border btn-pill" onclick="showToast('Order tracking coming soon!')">Track Order</button>
+        <button class="btn btn-border btn-pill" onclick="closeOv('confirmOv');openOv('trackOv')">Track Order</button>
         <button class="btn btn-border btn-pill" onclick="openInvoice()">🔲 Invoice</button>
       </div>
     </div>
@@ -414,10 +420,13 @@ function enterAndScroll(sec){
       <div class="nl" onclick="openCatalog();setNav(this)">Shop</div>
       <div class="nl" onclick="scrollS('saleSection');setNav(this)" style="color:#e07b2a;font-weight:700">Sale</div>
       <div class="nl" onclick="showPage('customPage');setNav(this)">Custom Order</div>
+      <div class="nl" onclick="showPage('galleryPage');setNav(this)">Gallery</div>
+      <div class="nl" onclick="openOv('bulkOv');setNav(this)">Bulk Order</div>
       <div class="nl" onclick="scrollS('blogSection');setNav(this)">Blog</div>
       <div class="nl" onclick="scrollS('contactSection');setNav(this)">Contact</div>
     </div>
     <div class="nav-right">
+      <button class="nav-ico" id="darkToggle" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
       <button class="nav-ico" onclick="openCatalog()" title="Search">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
@@ -440,6 +449,9 @@ function enterAndScroll(sec){
     <div class="mob-lnk" onclick="openCatalog();toggleMenu()">Shop All Products</div>
     <div class="mob-lnk" onclick="scrollS('saleSection');toggleMenu()" style="color:#e07b2a;font-weight:700">&#x1F525; End of Month Sale</div>
     <div class="mob-lnk" onclick="showPage('customPage');toggleMenu()">Custom Order</div>
+    <div class="mob-lnk" onclick="showPage('galleryPage');toggleMenu()">Gallery</div>
+    <div class="mob-lnk" onclick="openOv('bulkOv');toggleMenu()">Bulk Order</div>
+    <div class="mob-lnk" onclick="openOv('trackOv');toggleMenu()">Track Order</div>
     <div class="mob-lnk" onclick="scrollS('blogSection');toggleMenu()">Blog &amp; News</div>
     <div class="mob-lnk" onclick="scrollS('contactSection');toggleMenu()">Contact Us</div>
     <div class="mob-lnk" onclick="showPage('authPage');toggleMenu()">My Account</div>
@@ -760,6 +772,9 @@ function enterAndScroll(sec){
         <h4>Quick Links</h4>
         <ul>
           <li><a onclick="showPage('customPage')">Custom Order</a></li>
+          <li><a onclick="showPage('galleryPage')">Gallery</a></li>
+          <li><a onclick="openOv('bulkOv')">Bulk Order</a></li>
+          <li><a onclick="openOv('trackOv')">Track Order</a></li>
           <li><a onclick="scrollS('blogSection')">Blog &amp; News</a></li>
           <li><a onclick="showPage('authPage')">My Account</a></li>
           <li><a onclick="showPage('adminPage')">Admin Dashboard</a></li>
@@ -797,6 +812,7 @@ function enterAndScroll(sec){
       <div class="nl" onclick="showPage('storePage');setTimeout(()=>scrollS('contactSection'),120)">Contact</div>
     </div>
     <div class="nav-right">
+      <button class="nav-ico darkToggleAll" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
       <button class="nav-ico" onclick="openWl()" title="Wishlist">
         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span class="cart-cnt" id="wlCnt2" style="display:none">0</span>
@@ -857,6 +873,9 @@ function enterAndScroll(sec){
 
   <div class="shop-body">
     <div class="shop-tb">
+      <div class="srch-wrap">
+        <input type="search" class="srch-inp" id="prodSearch" placeholder="Search products…" oninput="searchProducts(this.value)">
+      </div>
       <div class="st-cnt"><span id="prodCountLabel">24 products</span></div>
       <div class="st-right">
         <select class="sort-sel" onchange="showToast('Sorted!')"><option>Featured</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Newest</option><option>Best Rated</option></select>
@@ -896,6 +915,14 @@ function enterAndScroll(sec){
     </div>
     <div style="height:2rem"></div>
   </div>
+
+  <!-- Recently Viewed -->
+  <div id="recentSection" class="recent-sec hidden">
+    <div class="shop-body" style="padding-top:0">
+      <div class="sec-lbl" style="font-size:.63rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem">Recently Viewed</div>
+      <div class="recent-row" id="recentRow"></div>
+    </div>
+  </div>
 </div><!-- /catalogPage -->
 
 <!-- ═══════ CUSTOM ORDERS PAGE ═══════ -->
@@ -912,6 +939,7 @@ function enterAndScroll(sec){
       <div class="nl" onclick="showPage('storePage');setTimeout(()=>scrollS('contactSection'),120)">Contact</div>
     </div>
     <div class="nav-right">
+      <button class="nav-ico darkToggleAll" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
       <button class="nav-ico" onclick="openWl()" title="Wishlist">
         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span class="cart-cnt" id="wlCnt3" style="display:none">0</span>
@@ -941,6 +969,7 @@ function enterAndScroll(sec){
     <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.4rem">
       <a href="https://wa.me/917907254065" class="btn btn-pill" style="background:#25d366;color:#fff;border:none;font-size:.78rem">WhatsApp Your Design</a>
       <button class="btn btn-white btn-pill" onclick="openOv('enqOv')" style="font-size:.78rem">Upload a File / Get Quote</button>
+      <button class="btn btn-pill" onclick="openOv('fileGuideOv')" style="background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.7);font-size:.78rem">📐 File Format Guide</button>
     </div>
   </div>
 
@@ -1001,6 +1030,7 @@ function enterAndScroll(sec){
       <div class="nl active" id="spTitle">Service</div>
     </div>
     <div class="nav-right">
+      <button class="nav-ico darkToggleAll" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
       <button class="nav-ico" onclick="openCart()" title="Cart">
         <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cart-cnt" id="navCartCnt4">0</span>
@@ -1420,6 +1450,51 @@ function enterAndScroll(sec){
   </div>
 </div>
 </div><!-- /adminPage -->
+
+<!-- ═══════ PAGE 8 — GALLERY ═══════ -->
+<div class="page" id="galleryPage">
+  <div class="ann" style="position:sticky;top:0;z-index:900"><div class="ann-track"><span class="ann-item">Portfolio Gallery · Real projects from our Calicut studio</span><span class="ann-item" style="opacity:.2;padding:0 1rem">—</span><span class="ann-item">Laser cutting · 3D printing · Resin art · Corporate gifts · Wedding cards</span><span class="ann-item" style="opacity:.2;padding:0 1rem">—</span><span class="ann-item">Follow us on Instagram @craft_biz for daily updates</span></div></div>
+  <nav class="topnav" style="position:sticky;top:34px">
+    <div class="nav-logo" onclick="showPage('storePage')">CRAFT BIZ</div>
+    <div class="nav-links">
+      <div class="nl" onclick="showPage('storePage')">← Home</div>
+      <div class="nl" onclick="showPage('catalogPage')">Shop</div>
+      <div class="nl active">Gallery</div>
+      <div class="nl" onclick="showPage('customPage')">Custom Order</div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-ico darkToggleAll" onclick="toggleDark()" title="Toggle dark mode">🌙</button>
+      <button class="nav-ico" onclick="openCart()" title="Cart">
+        <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-cnt" id="navCartCnt5">0</span>
+      </button>
+      <button class="nav-ico" onclick="showPage('authPage')" title="Account">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="sec" style="background:var(--off);padding-bottom:1rem">
+    <div class="sec-lbl">Our Work</div>
+    <div class="sec-title">Portfolio Gallery</div>
+    <div class="sec-sub">Real projects made in our Calicut studio — laser cutting, 3D printing, custom gifts and more.</div>
+  </div>
+  <div class="cat-bar">
+    <div class="cat-scroll">
+      <button class="cat-tab active" onclick="filterGallery('all',this)">All Work</button>
+      <button class="cat-tab" onclick="filterGallery('laser',this)">Laser Cut</button>
+      <button class="cat-tab" onclick="filterGallery('3d',this)">3D Print</button>
+      <button class="cat-tab" onclick="filterGallery('gifts',this)">Gifts</button>
+      <button class="cat-tab" onclick="filterGallery('wedding',this)">Wedding</button>
+      <button class="cat-tab" onclick="filterGallery('tshirt',this)">Apparel</button>
+    </div>
+  </div>
+  <div class="shop-body">
+    <div class="gal-grid" id="galGrid"></div>
+    <div style="text-align:center;padding:3rem 0;color:var(--muted);font-size:.85rem">
+      📸 More photos coming soon — follow <a href="https://instagram.com/craft_biz" target="_blank" style="color:var(--black);font-weight:700">@craft_biz</a> on Instagram for daily updates.
+    </div>
+  </div>
+</div><!-- /galleryPage -->
 
 <!-- ═══════ PAGE 7 — TERMS ═══════ -->
 <div class="page" id="termsPage">
@@ -1985,7 +2060,7 @@ function renderCart(){
 }
 function updateNavCart(){
   var c=getCartCount();
-  ["navCartCnt","navCartCnt2","navCartCnt3","navCartCnt4"].forEach(function(id){
+  ["navCartCnt","navCartCnt2","navCartCnt3","navCartCnt4","navCartCnt5"].forEach(function(id){
     var e=document.getElementById(id);if(e)e.textContent=c;
   });
 }
@@ -2756,11 +2831,106 @@ document.addEventListener("DOMContentLoaded",function(){
   </div>
 </div>
 
+<!-- ── GET QUOTE FLOATING BUTTON ── -->
+<a class="quote-float" onclick="openOv('enqOv')" title="Get a Quote">
+  ✏️ <span class="quote-float-label">Get Quote</span>
+</a>
+
 <!-- ── FLOATING WHATSAPP BUTTON ── -->
 <a href="https://wa.me/917907254065?text=Hi%2C%20I%20found%20your%20website%20and%20I%20am%20interested%20in%20your%20products." target="_blank" class="wa-float" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" fill="#fff" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.118 1.528 5.847L0 24l6.341-1.502A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.803a9.788 9.788 0 0 1-5.02-1.38l-.36-.214-3.733.884.944-3.638-.234-.374A9.757 9.757 0 0 1 2.197 12C2.197 6.58 6.58 2.197 12 2.197c5.42 0 9.803 4.383 9.803 9.803 0 5.42-4.383 9.803-9.803 9.803z"/></svg>
   <span class="wa-float-label">WhatsApp</span>
 </a>
+
+<!-- ── BULK ORDER MODAL ── -->
+<div class="ov" id="bulkOv">
+  <div class="modal modal-md">
+    <div class="mhdr"><h3>Bulk / Corporate Order Enquiry</h3><button class="xbtn" onclick="closeOv('bulkOv')">✕</button></div>
+    <div style="padding:1.4rem">
+      <div style="background:#f8f8f6;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.8rem;color:var(--mid);line-height:1.7">
+        🏢 Special pricing for orders above 50 units. Get dedicated account manager, custom branding, and priority production.
+      </div>
+      <div class="fg"><label class="fl">Company / Name <span class="req">*</span></label><input class="fi" id="blkName" placeholder="Your company or full name"></div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Mobile <span class="req">*</span></label><input class="fi" id="blkPhone" type="tel" placeholder="+91 79072 54065"></div>
+        <div class="fg"><label class="fl">Email</label><input class="fi" id="blkEmail" type="email" placeholder="you@company.com"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl">Product / Service <span class="req">*</span></label><select class="fi fsel" id="blkService"><option value="">Select service</option><option>Laser Cutting</option><option>CNC Milling</option><option>3D Printing</option><option>T-Shirt Printing</option><option>Corporate Gifts</option><option>Home Decor</option><option>Wedding Cards</option><option>Stationery &amp; ID</option><option>Multiple Services</option></select></div>
+        <div class="fg"><label class="fl">Quantity <span class="req">*</span></label><select class="fi fsel" id="blkQty"><option>50–100 units</option><option>100–500 units</option><option>500–1000 units</option><option>1000+ units</option></select></div>
+      </div>
+      <div class="fg"><label class="fl">Budget Range</label><select class="fi fsel" id="blkBudget"><option>₹5,000 – ₹25,000</option><option>₹25,000 – ₹1,00,000</option><option>₹1,00,000 – ₹5,00,000</option><option>₹5,00,000+</option></select></div>
+      <div class="fg"><label class="fl">Requirements / Notes</label><textarea class="fi ftxt" id="blkMsg" placeholder="Describe your requirements, design details, deadline, delivery location…"></textarea></div>
+      <button class="btn btn-dark btn-full btn-pill" onclick="submitBulk()">Send Bulk Enquiry →</button>
+      <div style="text-align:center;margin-top:.75rem;font-size:.72rem;color:var(--muted)">Or WhatsApp directly: <a href="https://wa.me/917907254065" style="color:var(--black);font-weight:700">+91 79072 54065</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TRACK ORDER MODAL ── -->
+<div class="ov" id="trackOv">
+  <div class="modal modal-sm">
+    <div class="mhdr"><h3>Track Your Order</h3><button class="xbtn" onclick="closeOv('trackOv')">✕</button></div>
+    <div style="padding:1.4rem">
+      <div class="fg"><label class="fl">Order ID</label><input class="fi" id="trackId" placeholder="#CB-2025-00XXX" style="letter-spacing:.05em"></div>
+      <div class="fg"><label class="fl">Mobile Number</label><input class="fi" id="trackPhone" type="tel" placeholder="+91 79072 54065"></div>
+      <button class="btn btn-dark btn-full btn-pill" onclick="trackOrder()" style="margin-bottom:1rem">Track Order →</button>
+      <div id="trackResult" style="display:none">
+        <div class="cp-steps" style="margin-bottom:1.2rem">
+          <div class="cp-s done"><div class="cp-ico">✓</div><div class="cp-lbl">Received</div></div>
+          <div class="cp-s done"><div class="cp-ico">✓</div><div class="cp-lbl">Confirmed</div></div>
+          <div class="cp-s act"><div class="cp-ico">⚙</div><div class="cp-lbl">In Production</div></div>
+          <div class="cp-s"><div class="cp-ico">4</div><div class="cp-lbl">Dispatched</div></div>
+          <div class="cp-s"><div class="cp-ico">5</div><div class="cp-lbl">Delivered</div></div>
+        </div>
+        <div style="background:#f8f8f6;border-radius:8px;padding:1rem;font-size:.78rem;color:var(--mid);line-height:1.8">
+          <strong style="color:var(--black);display:block;margin-bottom:.3rem">In Production</strong>
+          Your order is currently being manufactured. Estimated dispatch: <strong>2–3 working days</strong>.<br>
+          Questions? WhatsApp us at <a href="https://wa.me/917907254065" style="color:var(--black);font-weight:700">79072 54065</a>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:.7rem;color:var(--muted)">Can't find your order? <a href="https://wa.me/917907254065" style="color:var(--black);font-weight:700">Contact us on WhatsApp</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FILE FORMAT GUIDE MODAL ── -->
+<div class="ov" id="fileGuideOv">
+  <div class="modal modal-md">
+    <div class="mhdr"><h3>Design File Guide</h3><button class="xbtn" onclick="closeOv('fileGuideOv')">✕</button></div>
+    <div style="padding:1.4rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div style="background:#f8f8f6;border-radius:8px;padding:1rem">
+          <div style="font-size:.72rem;font-weight:800;margin-bottom:.6rem">⚡ Laser &amp; CNC</div>
+          <div style="font-size:.74rem;color:var(--mid);line-height:1.8">
+            ✅ .SVG — preferred<br>✅ .DXF — CNC/laser<br>✅ .AI — Illustrator<br>✅ .PDF — vector only<br>✅ .EPS — vector<br>⚠️ .PNG / .JPG — min 300dpi
+          </div>
+        </div>
+        <div style="background:#f8f8f6;border-radius:8px;padding:1rem">
+          <div style="font-size:.72rem;font-weight:800;margin-bottom:.6rem">🔮 3D Printing</div>
+          <div style="font-size:.74rem;color:var(--mid);line-height:1.8">
+            ✅ .STL — most common<br>✅ .OBJ — with textures<br>✅ .STEP — precision<br>✅ .3MF — full settings<br>⚠️ .FBX — convert first<br>⚠️ Sketch / image — extra charge
+          </div>
+        </div>
+        <div style="background:#f8f8f6;border-radius:8px;padding:1rem">
+          <div style="font-size:.72rem;font-weight:800;margin-bottom:.6rem">👕 T-Shirt / Mug / Gifts</div>
+          <div style="font-size:.74rem;color:var(--mid);line-height:1.8">
+            ✅ .PNG — transparent bg<br>✅ .PDF — print-ready<br>✅ .AI / .PSD<br>✅ .SVG — vector logos<br>⚠️ .JPG — min 300dpi<br>❌ WhatsApp photos — too low res
+          </div>
+        </div>
+        <div style="background:#f8f8f6;border-radius:8px;padding:1rem">
+          <div style="font-size:.72rem;font-weight:800;margin-bottom:.6rem">📐 General Tips</div>
+          <div style="font-size:.74rem;color:var(--mid);line-height:1.8">
+            • Minimum 300 DPI for raster<br>• Outline all fonts before saving<br>• Include bleed area for print<br>• Send CMYK for print jobs<br>• Max file size: 50MB<br>• ZIP multiple files together
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;text-align:center;font-size:.74rem;color:var(--muted)">
+        Not sure? <a onclick="closeOv('fileGuideOv');openOv('enqOv')" style="color:var(--black);font-weight:700;cursor:pointer">Send us your file</a> and we'll check it for free.
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ── POLICY OVERLAYS ── -->
 <div class="ov" id="privacyOv"><div class="ov-box" style="max-width:600px"><div class="mhdr"><h3>Privacy Policy</h3><button class="xbtn" onclick="closeOv('privacyOv')">✕</button></div><div class="ov-body" style="padding:1.5rem;max-height:70vh;overflow-y:auto;font-size:.82rem;line-height:1.8;color:var(--mid)"><p><strong>Craft Biz</strong> collects only the information needed to process your order — name, phone number, email, and delivery address. We do not sell or share your data with third parties.</p><p style="margin-top:1rem"><strong>What we collect:</strong> Name, mobile, email, delivery address, and any design files you upload. Files are used only for production and deleted after order completion.</p><p style="margin-top:1rem"><strong>WhatsApp communications:</strong> When you contact us via WhatsApp, your number is used only to respond to your enquiry or update you on your order.</p><p style="margin-top:1rem"><strong>Cookies:</strong> This website does not use tracking cookies. Cart data is stored locally in your browser only.</p><p style="margin-top:1rem">For any privacy concerns, contact us at <a href="mailto:craftbizbiz@gmail.com" style="color:var(--accent)">craftbizbiz@gmail.com</a></p></div></div></div>
@@ -2769,5 +2939,263 @@ document.addEventListener("DOMContentLoaded",function(){
 
 <div class="ov" id="returnOv"><div class="ov-box" style="max-width:600px"><div class="mhdr"><h3>Return &amp; Refund Policy</h3><button class="xbtn" onclick="closeOv('returnOv')">✕</button></div><div class="ov-body" style="padding:1.5rem;max-height:70vh;overflow-y:auto;font-size:.82rem;line-height:1.8;color:var(--mid)"><p><strong>Custom orders:</strong> All custom-made products (laser cutting, CNC, 3D printing, personalised items) are non-returnable and non-refundable once production has started. Please verify your design approval before confirming.</p><p style="margin-top:1rem"><strong>Ready-to-ship items:</strong> If you receive a damaged or incorrect item, contact us within 48 hours of delivery with photos. We will replace or refund at no extra cost.</p><p style="margin-top:1rem"><strong>Cancellation:</strong> Custom orders can be cancelled before production starts (usually within 4 hours of placing). Once production has started, cancellations are not accepted.</p><p style="margin-top:1rem"><strong>Defective products:</strong> If an item has a manufacturing defect, we will replace it free of charge. Share clear photos on WhatsApp within 48 hours of delivery.</p><p style="margin-top:1rem">Contact us: <a href="https://wa.me/917907254065" style="color:var(--accent)">+91 79072 54065</a> · <a href="mailto:craftbizbiz@gmail.com" style="color:var(--accent)">craftbizbiz@gmail.com</a></p></div></div></div>
 
+<!-- ── SERVICE WORKER REGISTRATION ── -->
+<script>
+if('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
+
+<!-- ── NEW FEATURES JS ── -->
+<script>
+/* ─── DARK MODE ─── */
+function toggleDark(){
+  var isDark=document.body.classList.toggle('dark');
+  try{localStorage.setItem('cbDark',isDark?'1':'0');}catch(e){}
+  var emoji=isDark?'☀️':'🌙';
+  document.querySelectorAll('#darkToggle,.darkToggleAll').forEach(function(b){b.textContent=emoji;});
+}
+(function(){
+  try{
+    if(localStorage.getItem('cbDark')==='1'){
+      document.body.classList.add('dark');
+      document.querySelectorAll('#darkToggle,.darkToggleAll').forEach(function(b){b.textContent='☀️';});
+    }
+  }catch(e){}
+})();
+
+/* ─── PRODUCT SEARCH ─── */
+var _searchQ='';
+function searchProducts(q){
+  _searchQ=(q||'').trim().toLowerCase();
+  renderProducts();
+}
+
+/* ─── RECENTLY VIEWED ─── */
+function _saveRecent(id){
+  try{
+    var arr=JSON.parse(localStorage.getItem('cbRecent')||'[]');
+    arr=arr.filter(function(x){return x!==id;});
+    arr.unshift(id);
+    if(arr.length>6)arr=arr.slice(0,6);
+    localStorage.setItem('cbRecent',JSON.stringify(arr));
+  }catch(e){}
+}
+function renderRecent(){
+  try{
+    var arr=JSON.parse(localStorage.getItem('cbRecent')||'[]');
+    var sec=document.getElementById('recentSection');
+    var row=document.getElementById('recentRow');
+    if(!sec||!row)return;
+    if(!arr.length){sec.classList.add('hidden');return;}
+    var html='';
+    arr.forEach(function(id){
+      var p=getProd(id);if(!p)return;
+      var offPct=p.orig>0?Math.round((1-p.price/p.orig)*100):0;
+      html+='<div class="pc" onclick="openProduct('+p.id+')" style="cursor:pointer">';
+      html+='<div class="pc-img" style="background:#f0f0ee">';
+      var pImgs=p.imgs&&p.imgs.length>0?p.imgs:[];
+      if(pImgs.length>0){html+='<img src="'+pImgs[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}
+      html+='<div class="pc-img-ph" style="'+(pImgs.length>0?'display:none':'')+'">'+p.e+'</div>';
+      html+='</div>';
+      html+='<div class="pc-body">';
+      html+='<div class="pc-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
+      html+='<div class="pc-name" style="font-size:.74rem">'+p.name+'</div>';
+      html+='<div><span class="pc-price" style="font-size:.88rem"><span class="sym">₹</span>'+p.price+'</span>';
+      if(p.orig)html+='<span class="pc-off" style="margin-left:.3rem">-'+offPct+'%</span>';
+      html+='</div></div></div>';
+    });
+    row.innerHTML=html;
+    sec.classList.remove('hidden');
+  }catch(e){}
+}
+
+/* ─── SHARE PRODUCT ─── */
+function shareProduct(e,id){
+  if(e)e.stopPropagation();
+  var p=getProd(id);if(!p)return;
+  var url='https://wa.me/917907254065?text='+encodeURIComponent("Hi, I'm interested in: "+p.name+" - ₹"+p.price+". Website: craftbiz.co.in");
+  window.open(url,'_blank');
+}
+
+/* ─── SUBMIT BULK ─── */
+function submitBulk(){
+  var n=document.getElementById('blkName'),ph=document.getElementById('blkPhone'),sv=document.getElementById('blkService');
+  if(!n||!n.value.trim()){showToast('⚠ Please enter your name/company.');return;}
+  if(!ph||ph.value.trim().length<10){showToast('⚠ Please enter a valid mobile number.');return;}
+  if(!sv||!sv.value){showToast('⚠ Please select a product/service.');return;}
+  var qty=document.getElementById('blkQty'),bdg=document.getElementById('blkBudget'),msg=document.getElementById('blkMsg');
+  var txt='Hi, I have a bulk order enquiry.\nCompany/Name: '+n.value+'\nMobile: '+ph.value+'\nService: '+sv.value+'\nQty: '+(qty?qty.value:'')+'\nBudget: '+(bdg?bdg.value:'')+'\nNotes: '+(msg?msg.value:'');
+  var url='https://wa.me/917907254065?text='+encodeURIComponent(txt);
+  window.open(url,'_blank');
+  closeOv('bulkOv');
+  showToast('✓ Bulk enquiry sent! Team will contact you soon.');
+  [n,ph,document.getElementById('blkEmail'),msg].forEach(function(f){if(f)f.value='';});
+}
+
+/* ─── TRACK ORDER ─── */
+function trackOrder(){
+  var tid=document.getElementById('trackId'),tph=document.getElementById('trackPhone');
+  if(!tid||!tid.value.trim()){showToast('⚠ Please enter your Order ID.');return;}
+  if(!tph||tph.value.trim().length<10){showToast('⚠ Please enter your mobile number.');return;}
+  var res=document.getElementById('trackResult');
+  if(res)res.style.display='block';
+  showToast('✓ Order found! Status: In Production');
+}
+
+/* ─── GALLERY ─── */
+var GALLERY_ITEMS=[
+  {e:'⚡',label:'Custom MDF Nameplate',cat:'laser'},
+  {e:'💠',label:'Acrylic LED Sign',cat:'laser'},
+  {e:'🔑',label:'Couple Keychain Set',cat:'laser'},
+  {e:'🔮',label:'Resin Figurine',cat:'3d'},
+  {e:'🏺',label:'Custom Mould Print',cat:'3d'},
+  {e:'👕',label:'Corporate T-Shirts x50',cat:'tshirt'},
+  {e:'🎁',label:'Branded Gift Hamper',cat:'gifts'},
+  {e:'☕',label:'Photo Mug Set',cat:'gifts'},
+  {e:'💌',label:'Laser Wedding Card',cat:'wedding'},
+  {e:'📦',label:'Acrylic Box Set',cat:'wedding'},
+  {e:'🖼️',label:'Calligraphy Wall Art',cat:'laser'},
+  {e:'🔩',label:'CNC Relief Panel',cat:'laser'},
+];
+var _galCat='all';
+function filterGallery(cat,btn){
+  _galCat=cat;
+  document.querySelectorAll('#galleryPage .cat-tab').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  renderGallery();
+}
+function renderGallery(){
+  var g=document.getElementById('galGrid');if(!g)return;
+  var items=_galCat==='all'?GALLERY_ITEMS:GALLERY_ITEMS.filter(function(i){return i.cat===_galCat;});
+  var html='';
+  items.forEach(function(item){
+    html+='<div class="gal-card"><div style="font-size:3rem">'+item.e+'</div><div class="gal-lbl">'+item.label+'</div></div>';
+  });
+  g.innerHTML=html;
+}
+
+/* ─── PRICE CALCULATOR EXTRA DATA ─── */
+var CALC_PRICES={
+  laser:    {base:80,  per:'piece',  materials:['MDF','Acrylic','Wood'],       sizes:{S:1,M:1.8,L:2.8,XL:4.5}},
+  cnc:      {base:300, per:'project',materials:['MDF','Wood','Acrylic'],       sizes:{S:1,M:2,L:3.5,XL:6}},
+  '3d':     {base:200, per:'model',  materials:['PLA','ABS','Resin'],          sizes:{S:1,M:1.8,L:3,XL:5}},
+  tshirt:   {base:150, per:'shirt',  materials:['Cotton','Polyester','Blend'], sizes:{S:1,M:1,L:1,XL:1}},
+  gifts:    {base:180, per:'piece',  materials:['Ceramic','Acrylic','Wood'],   sizes:{S:1,M:1.5,L:2,XL:3}},
+  homedecor:{base:250, per:'piece',  materials:['Acrylic','MDF','Wood'],       sizes:{S:1,M:1.8,L:2.8,XL:4}},
+  wedding:  {base:35,  per:'card',   materials:['Paper','Acrylic','MDF'],      sizes:{S:1,M:1.3,L:1.6,XL:2}},
+  resin:    {base:450, per:'piece',  materials:['Epoxy','UV Resin'],           sizes:{S:1,M:1.6,L:2.5,XL:4}},
+  stationery:{base:25, per:'piece',  materials:['PVC','Paper','Vinyl'],        sizes:{S:1,M:1,L:1,XL:1}},
+};
+
+/* ─── PATCH renderProducts to add share button + save recent + search filter ─── */
+var _origRenderProducts=renderProducts;
+renderProducts=function(){
+  var g=document.getElementById("prodGrid");
+  if(!g)return;
+  var q=_searchQ||'';
+  var base=(curCat==="all"?PRODUCTS.filter(function(p){return p.ready;}):PRODUCTS.filter(function(p){return p.ready&&p.cat===curCat;}));
+  var list=q?base.filter(function(p){
+    return (p.name||'').toLowerCase().indexOf(q)>-1||(p.cat||'').toLowerCase().indexOf(q)>-1||(p.desc||'').toLowerCase().indexOf(q)>-1;
+  }):base;
+  var cl=document.getElementById("prodCountLabel");
+  if(cl)cl.textContent=list.length+" products";
+  g.className="prod-grid"+(isListView?" list-v":"");
+  if(!list.length){g.innerHTML='<div class="prod-empty">'+(q?'No products match "'+q+'". Try a different search.':'No products in this category yet.')+'</div>';return;}
+  var html="";
+  var BG_arr=typeof BG!=='undefined'?BG:[];
+  list.forEach(function(p,i){
+    var bg=BG_arr[i%BG_arr.length]||'#f0f0ee';
+    var offPct=p.orig>0?Math.round((1-p.price/p.orig)*100):0;
+    var stockTxt=p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
+    var listDesc=isListView?'<div style="font-size:.74rem;color:var(--mid);line-height:1.6;margin-bottom:.4rem">'+p.desc+'</div>':"";
+    html+='<div class="pc" onclick="openProduct('+p.id+')">';
+    html+='<div class="pc-img" style="background:'+bg+'">';
+    var pImgs=p.imgs&&p.imgs.length>0?p.imgs:[];
+    if(pImgs.length>0){html+='<img src="'+pImgs[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}
+    html+='<div class="pc-img-ph" style="'+(pImgs.length>0?'display:none':'')+'">'+p.e+'</div>';
+    html+='<div class="pc-flag '+p.badge+'">'+p.badgeTxt+'</div>';
+    html+='<div class="pc-stock'+(p.stock==="low"?" low":"")+'">'+stockTxt+'</div>';
+    html+='<div class="pc-wish'+(isInWl(p.id)?" active":"")+'\" onclick="event.stopPropagation();toggleWl('+p.id+')" id="pw-'+p.id+'">♡</div>';
+    html+='</div>';
+    html+='<div class="pc-body">';
+    html+='<div class="pc-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
+    html+='<div class="pc-name">'+p.name+'</div>';
+    if(p.specs)html+='<div class="pc-specs">'+p.specs+'</div>';
+    if(isListView)html+=listDesc;
+    html+='<div class="pc-rat"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' ('+p.rc+')</span></div>';
+    html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
+    html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
+    html+='<div class="pc-note">'+p.note+'</div></div>';
+    html+='<button class="pc-btn" onclick="event.stopPropagation();addToCart('+p.id+')">Add to Cart</button>';
+    html+='<button class="pc-share" onclick="shareProduct(event,'+p.id+')" title="Share on WhatsApp">Share ↗</button>';
+    html+='</div></div>';
+  });
+  g.innerHTML=html;
+  renderRecent();
+};
+
+/* ─── PATCH renderCustomProducts to add share button ─── */
+var _origRenderCustomProducts=renderCustomProducts;
+renderCustomProducts=function(){
+  var g=document.getElementById("customProdGrid");
+  if(!g)return;
+  var list=PRODUCTS.filter(function(p){return !p.ready&&(curCustomCat==="all"||p.cat===curCustomCat);});
+  var cl=document.getElementById("customCountLabel");
+  if(cl)cl.textContent=list.length+" custom product"+(list.length!==1?"s":"");
+  if(!list.length){g.innerHTML='<div class="prod-empty">No custom products in this category.</div>';return;}
+  var html="";
+  var BG_arr=typeof BG!=='undefined'?BG:[];
+  list.forEach(function(p,i){
+    var bg=BG_arr[i%BG_arr.length]||'#f0f0ee';
+    var pImgs=p.imgs&&p.imgs.length>0?p.imgs:[];
+    html+='<div class="pc" onclick="openProduct('+p.id+')">';
+    html+='<div class="pc-img" style="background:'+bg+'">';
+    if(pImgs.length>0){html+='<img src="'+pImgs[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}
+    html+='<div class="pc-img-ph" style="'+(pImgs.length>0?'display:none':'')+'">'+p.e+'</div>';
+    html+='<div class="pc-flag '+p.badge+'">'+p.badgeTxt+'</div>';
+    html+='<div class="pc-stock">Made to Order</div>';
+    html+='<div class="pc-wish'+(isInWl(p.id)?" active":"")+'\" onclick="event.stopPropagation();toggleWl('+p.id+')" id="pwc-'+p.id+'">♡</div>';
+    html+='</div>';
+    html+='<div class="pc-body">';
+    html+='<div class="pc-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
+    html+='<div class="pc-name">'+p.name+'</div>';
+    if(p.specs)html+='<div class="pc-specs">'+p.specs+'</div>';
+    html+='<div class="pc-rat"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' ('+p.rc+')</span></div>';
+    html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
+    html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span></div>';
+    html+='<div class="pc-note">'+p.note+'</div></div>';
+    html+='<button class="pc-btn" style="background:#111" onclick="event.stopPropagation();openEnq(\''+p.name.replace(/'/g,"")+'\')">Enquire / Get Quote</button>';
+    html+='<button class="pc-share" onclick="shareProduct(event,'+p.id+')" title="Share on WhatsApp">Share ↗</button>';
+    html+='</div></div>';
+  });
+  g.innerHTML=html;
+};
+
+/* ─── PATCH openProduct to save recent ─── */
+var _origOpenProduct=openProduct;
+openProduct=function(id){
+  _saveRecent(id);
+  _origOpenProduct(id);
+};
+
+/* ─── PATCH showPage to init gallery ─── */
+var _origShowPage=showPage;
+showPage=function(id){
+  _origShowPage(id);
+  if(id==='galleryPage'){renderGallery();if(typeof updateNavCart==='function')updateNavCart();}
+};
+
+/* ─── INIT: apply dark mode emoji on all toggles after DOM ready ─── */
+(function(){
+  try{
+    if(localStorage.getItem('cbDark')==='1'){
+      document.querySelectorAll('#darkToggle,.darkToggleAll').forEach(function(b){b.textContent='☀️';});
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
