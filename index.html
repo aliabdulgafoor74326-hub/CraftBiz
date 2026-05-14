@@ -1928,11 +1928,11 @@ function openProduct(id){
     /* fabric */
     html+='<div class="pd-var"><div class="pd-var-lbl">Fabric</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">100% Cotton</button><button class="pd-vbtn" onclick="selVar(this)">Polyester</button><button class="pd-vbtn" onclick="selVar(this)">Cotton-Poly</button><button class="pd-vbtn" onclick="selVar(this)">Fleece</button></div></div>';
     /* size */
-    html+='<div class="pd-var" id="tsSzRow"><div class="pd-var-lbl">Size</div><div class="pd-var-opts"><button class="pd-vbtn" onclick="selVar(this)">XS</button><button class="pd-vbtn sel" onclick="selVar(this)">S</button><button class="pd-vbtn" onclick="selVar(this)">M</button><button class="pd-vbtn" onclick="selVar(this)">L</button><button class="pd-vbtn" onclick="selVar(this)">XL</button><button class="pd-vbtn" onclick="selVar(this)">XXL</button><button class="pd-vbtn" onclick="selVar(this)">3XL</button></div></div>';
+    html+='<div class="pd-var ts-req" id="tsSzRow"><div class="pd-var-lbl">Size <span class="req-star">*</span></div><div class="pd-var-opts"><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XS</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">S</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">M</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">L</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XL</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XXL</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">3XL</button></div></div>';
     /* colour swatches */
-    html+='<div class="pd-var"><div class="pd-var-lbl">T-Shirt Colour</div><div class="pd-clr-opts">';
-    [{c:'#fff',n:'White',b:'#ccc'},{c:'#111',n:'Black'},{c:'#1a4fc8',n:'Navy Blue'},{c:'#c8401a',n:'Red'},{c:'#2a8c3a',n:'Bottle Green'},{c:'#6b2fa0',n:'Purple'},{c:'#f5a623',n:'Yellow'},{c:'#888',n:'Grey'},{c:'#c0855b',n:'Beige'},{c:'#e07b2a',n:'Orange'},{c:'#1a8cbf',n:'Royal Blue'},{c:'#4a4a4a',n:'Charcoal'},{c:'#c8407a',n:'Pink'},{c:'#3a7a4a',n:'Olive Green'}].forEach(function(cl,i){
-      html+='<button class="pd-clr-sw'+(i===0?' sel':'')+'" style="background:'+cl.c+';border-color:'+(cl.b||cl.c)+';" onclick="selClr(this)" title="'+cl.n+'"><span class="pd-clr-tt">'+cl.n+'</span></button>';
+    html+='<div class="pd-var ts-req" id="tsClrRow"><div class="pd-var-lbl">T-Shirt Colour <span class="req-star">*</span></div><div class="pd-clr-opts">';
+    [{c:'#fff',n:'White',b:'#ccc'},{c:'#111',n:'Black'},{c:'#1a4fc8',n:'Navy Blue'},{c:'#c8401a',n:'Red'},{c:'#2a8c3a',n:'Bottle Green'},{c:'#6b2fa0',n:'Purple'},{c:'#f5a623',n:'Yellow'},{c:'#888',n:'Grey'},{c:'#c0855b',n:'Beige'},{c:'#e07b2a',n:'Orange'},{c:'#1a8cbf',n:'Royal Blue'},{c:'#4a4a4a',n:'Charcoal'},{c:'#c8407a',n:'Pink'},{c:'#3a7a4a',n:'Olive Green'}].forEach(function(cl){
+      html+='<button class="pd-clr-sw" style="background:'+cl.c+';border-color:'+(cl.b||cl.c)+';" onclick="selClr(this)" title="'+cl.n+'"><span class="pd-clr-tt">'+cl.n+'</span></button>';
     });
     html+='</div></div>';
     /* print method */
@@ -1970,12 +1970,17 @@ function selVar(el){el.parentNode.querySelectorAll(".pd-vbtn").forEach(function(
 function selClr(el){
   el.parentNode.querySelectorAll('.pd-clr-sw').forEach(function(b){b.classList.remove('sel');});
   el.classList.add('sel');
+  var row=document.getElementById('tsClrRow');
+  if(row)row.classList.remove('ts-err');
 }
 function adjQty(d){
   var inp=document.getElementById('tsQty');if(!inp)return;
   var v=parseInt(inp.value)||1;v+=d;if(v<1)v=1;if(v>999)v=999;inp.value=v;
 }
 function clampQty(inp){var v=parseInt(inp.value)||1;if(v<1)v=1;if(v>999)v=999;inp.value=v;}
+function _clearErr(el){
+  var row=el.closest('.ts-req');if(row)row.classList.remove('ts-err');
+}
 function _tsGarment(btn){
   var g=btn.textContent.trim();
   var noSlvNk=(g==='Cap'||g==='Tote Bag'||g==='Apron');
@@ -1987,12 +1992,30 @@ function _tsGarment(btn){
   if(nr)nr.style.display=noSlvNk?'none':'';
   if(szr)szr.style.display=noSz?'none':'';
 }
+function _tsValidate(){
+  var missing=[];
+  /* size (if visible) */
+  var szRow=document.getElementById('tsSzRow');
+  if(szRow&&szRow.style.display!=='none'&&!szRow.querySelector('.pd-vbtn.sel')){
+    missing.push('Size');
+    szRow.classList.add('ts-err');
+    setTimeout(function(){szRow.classList.remove('ts-err');},2000);
+  }
+  /* colour */
+  var clrRow=document.getElementById('tsClrRow');
+  if(clrRow&&!clrRow.querySelector('.pd-clr-sw.sel')){
+    missing.push('T-Shirt Colour');
+    clrRow.classList.add('ts-err');
+    setTimeout(function(){clrRow.classList.remove('ts-err');},2000);
+  }
+  return missing;
+}
 function _getTsOpts(){
   var opts={};
   document.querySelectorAll('#pdContent .ts-cfg .pd-var').forEach(function(row){
     if(row.style.display==='none')return;
     var lbl=row.querySelector('.pd-var-lbl');if(!lbl)return;
-    var key=lbl.textContent.trim();
+    var key=lbl.firstChild.textContent.trim();
     var clrSel=row.querySelector('.pd-clr-sw.sel');
     if(clrSel){opts[key]=clrSel.title;return;}
     var vbtnSel=row.querySelector('.pd-vbtn.sel');
@@ -2002,6 +2025,8 @@ function _getTsOpts(){
   return opts;
 }
 function _tsWA(name,price){
+  var missing=_tsValidate();
+  if(missing.length){showToast('⚠ Please select: '+missing.join(' & '));return;}
   var opts=_getTsOpts();
   var txt='Hi! I want to order:\n*'+name+'*\n\n';
   var order=['Garment Type','Sleeve','Neck Style','Fabric','Size','T-Shirt Colour','Print Method','Quantity'];
@@ -2010,12 +2035,14 @@ function _tsWA(name,price){
   window.open('https://wa.me/917907254065?text='+encodeURIComponent(txt),'_blank');
 }
 function _tsAddCart(id){
+  var missing=_tsValidate();
+  if(missing.length){showToast('⚠ Please select: '+missing.join(' & '));return;}
   var opts=_getTsOpts();
   var qty=parseInt((document.getElementById('tsQty')||{value:'1'}).value)||1;
   for(var i=0;i<qty;i++)addToCart(id);
   var p=getProd(id);
-  var note=Object.keys(opts).filter(function(k){return k!=='Quantity';}).map(function(k){return opts[k];}).join(' · ');
-  showToast('✓ '+qty+'× '+(p?p.name:'item')+' added'+(note?' ('+note+')':''));
+  var note=['Size','T-Shirt Colour','Fabric','Sleeve'].map(function(k){return opts[k];}).filter(Boolean).join(' · ');
+  showToast('✓ '+qty+'× '+(p?p.name:'item')+' added'+(note?' — '+note:''));
   closeOv('pdOv');
 }
 

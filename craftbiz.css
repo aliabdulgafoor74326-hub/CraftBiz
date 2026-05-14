@@ -305,6 +305,25 @@ img{display:block;max-width:100%;}
 .pd-wa:hover{background:#1fb354;}
 /* ── T-SHIRT CONFIGURATOR ── */
 .ts-cfg { border-top:1px solid var(--bdr); padding-top:.8rem; margin-top:.2rem; }
+/* required field marker */
+.req-star { color:var(--accent); font-size:.75rem; margin-left:.2rem; }
+/* validation error state */
+@keyframes tsShake {
+  0%,100% { transform:translateX(0); }
+  20%      { transform:translateX(-6px); }
+  40%      { transform:translateX(6px); }
+  60%      { transform:translateX(-4px); }
+  80%      { transform:translateX(4px); }
+}
+.ts-err {
+  animation: tsShake .45s ease;
+  background: rgba(200,64,26,.07);
+  border-radius: 6px;
+  padding: .45rem .6rem !important;
+  border-left: 3px solid var(--accent) !important;
+  margin-left: -0.6rem;
+}
+body.dark .ts-err { background: rgba(200,64,26,.12); }
 /* colour swatches */
 .pd-clr-opts { display:flex; flex-wrap:wrap; gap:.45rem; }
 .pd-clr-sw { width:28px; height:28px; border-radius:50%; border:2.5px solid transparent; cursor:pointer; position:relative; transition:transform .15s,box-shadow .15s; box-shadow:0 1px 4px rgba(0,0,0,.22); }
