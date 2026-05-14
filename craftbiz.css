@@ -303,6 +303,11 @@ img{display:block;max-width:100%;}
 .pd-enq:hover{background:var(--black);color:var(--white);}
 .pd-wa{width:100%;padding:.65rem;background:#25d366;border:none;border-radius:var(--r);font-size:.78rem;font-weight:600;color:var(--white);cursor:pointer;transition:background .18s;}
 .pd-wa:hover{background:#1fb354;}
+/* t-shirt "Customise →" card button */
+.pc-btn.pc-cfg { background:var(--accent); color:#fff; border-color:var(--accent); }
+.pc-btn.pc-cfg:hover { background:#a8320e; border-color:#a8320e; }
+body.dark .pc-btn.pc-cfg { background:var(--accent); color:#fff; }
+
 /* ── T-SHIRT CONFIGURATOR ── */
 .ts-cfg { border-top:1px solid var(--bdr); padding-top:.8rem; margin-top:.2rem; }
 /* required field marker */

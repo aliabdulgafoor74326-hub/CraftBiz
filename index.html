@@ -1727,7 +1727,7 @@ function renderProducts(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn" onclick="event.stopPropagation();addToCart('+p.id+')">Add to Cart</button>';
+    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
     html+='</div></div>';
   });
   g.innerHTML=html;
@@ -1833,7 +1833,7 @@ function openService(cat){
       h+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
       h+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span><span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
       h+='<div class="pc-note">'+p.note+'</div></div>';
-      h+='<button class="pc-btn" onclick="event.stopPropagation();addToCart('+p.id+')">Add to Cart</button>';
+      h+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
       h+='</div></div>';
     });
     h+='</div>';
@@ -1896,7 +1896,7 @@ function renderStoreReady(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn" onclick="event.stopPropagation();addToCart('+p.id+')">Add to Cart</button></div></div>';
+    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button></div></div>';
   });
   g.innerHTML=html;
 }
@@ -1965,6 +1965,16 @@ function pdThumb(el,ico){document.querySelectorAll(".pd-thumb").forEach(function
 function pdThumbImg(el,src){document.querySelectorAll(".pd-thumb").forEach(function(t){t.classList.remove("sel");});el.classList.add("sel");var m=document.getElementById("pdMainIco");if(m)m.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:cover;">';}
 function pdThumbTxt(el,ico){document.querySelectorAll(".pd-thumb").forEach(function(t){t.classList.remove("sel");});el.classList.add("sel");var m=document.getElementById("pdMainIco");if(m)m.innerHTML=ico;}
 function selVar(el){el.parentNode.querySelectorAll(".pd-vbtn").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");}
+
+/* ── SMART ADD-TO-CART: opens configurator for t-shirts ── */
+function pcAddToCart(id){
+  var p=getProd(id);
+  if(p&&p.cat==='tshirt'){
+    openProduct(id);
+  } else {
+    addToCart(id);
+  }
+}
 
 /* ── T-SHIRT CONFIGURATOR ── */
 function selClr(el){
@@ -3252,7 +3262,7 @@ renderProducts=function(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn" onclick="event.stopPropagation();addToCart('+p.id+')">Add to Cart</button>';
+    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
     html+='<button class="pc-share" onclick="shareProduct(event,'+p.id+')" title="Share on WhatsApp">Share ↗</button>';
     html+='</div></div>';
   });
