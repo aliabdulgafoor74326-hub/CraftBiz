@@ -1945,7 +1945,7 @@ function _hmpUpdate(){
   var btn=document.getElementById('hmpOrderBtn');
   if(btn)btn.disabled=cnt===0;
 }
-var _curGsm=0,_curType='';
+var _curGsm=0,_curType='',_curMugClr='';
 function _gsmSel(gsm,price){
   _curGsm=gsm;
   var pn=document.getElementById('pdPriceNum');if(pn)pn.textContent=price;
@@ -1954,16 +1954,22 @@ function _gsmSel(gsm,price){
 function _typeSel(el,price,label){
   document.querySelectorAll('.type-opt').forEach(function(b){b.classList.remove('type-sel');});
   el.classList.add('type-sel');
-  _curType=label;
+  _curType=label;_curMugClr='';
   var pn=document.getElementById('pdPriceNum');if(pn)pn.textContent=price;
   var pNote=document.getElementById('pdPriceNote');if(pNote)pNote.textContent=label+' · per mug';
+  var clrRow=document.getElementById('mugClrRow');
+  if(clrRow){
+    clrRow.style.display=label==='Coloured Mug'?'':'none';
+    if(label!=='Coloured Mug')clrRow.querySelectorAll('.mug-clr-btn').forEach(function(b){b.classList.remove('sel');});
+  }
 }
+function _mugClrSel(clr){_curMugClr=clr;}
 function _giftOrderWA(name){
   var gsmEl=document.querySelector('.gsm-btn.sel');
   var typeEl=document.querySelector('.type-opt.type-sel');
   var extra='';
   if(gsmEl)extra+='\nPaper Thickness: '+gsmEl.dataset.gsm+' GSM (₹'+gsmEl.dataset.price+'/card)';
-  if(typeEl){var tp=typeEl.querySelector('.type-price');extra+='\nMug Type: '+_curType+(tp?' ('+tp.textContent+')':'');}
+  if(typeEl){var tp=typeEl.querySelector('.type-price');extra+='\nMug Type: '+_curType+(tp?' ('+tp.textContent+')':'');if(_curMugClr)extra+='\nMug Colour: '+_curMugClr;}
   window.open('https://wa.me/917907254065?text='+encodeURIComponent('Hi, I want to customise: '+name+extra+'\nPlease guide me on pricing and design upload.'),'_blank');
 }
 function _hmpOrder(){
@@ -2062,6 +2068,13 @@ function openProduct(id){
         html+='</div>';
       });
       html+='</div></div>';
+      if(p.id===11){
+        html+='<div class="pd-var" id="mugClrRow" style="display:none"><div class="pd-var-lbl">Inner &amp; Handle Colour <span class="req-star">*</span></div><div class="pd-var-opts">';
+        [{c:'Blue',h:'#1a4fc8'},{c:'Green',h:'#2a8c3a'},{c:'Yellow',h:'#f5a623'},{c:'Black',h:'#111111'},{c:'Red',h:'#c8401a'},{c:'Pink',h:'#e05090'}].forEach(function(o){
+          html+='<button class="pd-vbtn mug-clr-btn" data-clr="'+o.c+'" onclick="selVar(this);_mugClrSel(\''+o.c+'\')"><span style="width:10px;height:10px;border-radius:50%;background:'+o.h+';display:inline-block;margin-right:.3rem;flex-shrink:0;border:1px solid rgba(0,0,0,.15)"></span>'+o.c+'</button>';
+        });
+        html+='</div><div style="font-size:.66rem;color:var(--mid);margin-top:.25rem">All colours same rate · ₹220 per mug</div></div>';
+      }
     }
     if(p.cat==="laser"||p.cat==="cnc"){
       html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';
