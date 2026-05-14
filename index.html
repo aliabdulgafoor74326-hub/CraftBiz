@@ -1917,14 +1917,43 @@ function openProduct(id){
   html+='<div class="pd-name">'+p.name+'</div>';
   html+='<div class="pd-rat-row"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' · '+p.rc+' reviews</span></div>';
   html+='<div class="pd-price-box"><div class="pd-price-lbl">Starting from</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note">'+p.note+'</div></div>';
-  html+='<div class="pd-var"><div class="pd-var-lbl">Quantity:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">1 Piece</button><button class="pd-vbtn" onclick="selVar(this)">2–9 Pcs</button><button class="pd-vbtn" onclick="selVar(this)">10+ Bulk</button></div></div>';
-  if(p.cat==="laser"||p.cat==="cnc"){
-    html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';
-    html+='<div class="pd-var"><div class="pd-var-lbl">Acrylic Colour:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Transparent</button><button class="pd-vbtn" onclick="selVar(this)">Milky White</button><button class="pd-vbtn" onclick="selVar(this)">Black</button><button class="pd-vbtn" onclick="selVar(this)">Custom Colour</button></div></div>';
+  if(p.cat==='tshirt'){
+    html+='<div class="ts-cfg">';
+    /* garment */
+    html+='<div class="pd-var"><div class="pd-var-lbl">Garment Type</div><div class="pd-var-opts"><button class="pd-vbtn ts-g sel" onclick="selVar(this);_tsGarment(this)">T-Shirt</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Hoodie</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Polo</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Cap</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Tote Bag</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Apron</button></div></div>';
+    /* sleeve */
+    html+='<div class="pd-var" id="tsSlvRow"><div class="pd-var-lbl">Sleeve</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Half Sleeve</button><button class="pd-vbtn" onclick="selVar(this)">Full Sleeve</button><button class="pd-vbtn" onclick="selVar(this)">Sleeveless</button></div></div>';
+    /* neck */
+    html+='<div class="pd-var" id="tsNkRow"><div class="pd-var-lbl">Neck Style</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Round Neck</button><button class="pd-vbtn" onclick="selVar(this)">V-Neck</button><button class="pd-vbtn" onclick="selVar(this)">Polo Collar</button><button class="pd-vbtn" onclick="selVar(this)">Henley</button></div></div>';
+    /* fabric */
+    html+='<div class="pd-var"><div class="pd-var-lbl">Fabric</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">100% Cotton</button><button class="pd-vbtn" onclick="selVar(this)">Polyester</button><button class="pd-vbtn" onclick="selVar(this)">Cotton-Poly</button><button class="pd-vbtn" onclick="selVar(this)">Fleece</button></div></div>';
+    /* size */
+    html+='<div class="pd-var" id="tsSzRow"><div class="pd-var-lbl">Size</div><div class="pd-var-opts"><button class="pd-vbtn" onclick="selVar(this)">XS</button><button class="pd-vbtn sel" onclick="selVar(this)">S</button><button class="pd-vbtn" onclick="selVar(this)">M</button><button class="pd-vbtn" onclick="selVar(this)">L</button><button class="pd-vbtn" onclick="selVar(this)">XL</button><button class="pd-vbtn" onclick="selVar(this)">XXL</button><button class="pd-vbtn" onclick="selVar(this)">3XL</button></div></div>';
+    /* colour swatches */
+    html+='<div class="pd-var"><div class="pd-var-lbl">T-Shirt Colour</div><div class="pd-clr-opts">';
+    [{c:'#fff',n:'White',b:'#ccc'},{c:'#111',n:'Black'},{c:'#1a4fc8',n:'Navy Blue'},{c:'#c8401a',n:'Red'},{c:'#2a8c3a',n:'Bottle Green'},{c:'#6b2fa0',n:'Purple'},{c:'#f5a623',n:'Yellow'},{c:'#888',n:'Grey'},{c:'#c0855b',n:'Beige'},{c:'#e07b2a',n:'Orange'},{c:'#1a8cbf',n:'Royal Blue'},{c:'#4a4a4a',n:'Charcoal'},{c:'#c8407a',n:'Pink'},{c:'#3a7a4a',n:'Olive Green'}].forEach(function(cl,i){
+      html+='<button class="pd-clr-sw'+(i===0?' sel':'')+'" style="background:'+cl.c+';border-color:'+(cl.b||cl.c)+';" onclick="selClr(this)" title="'+cl.n+'"><span class="pd-clr-tt">'+cl.n+'</span></button>';
+    });
+    html+='</div></div>';
+    /* print method */
+    html+='<div class="pd-var"><div class="pd-var-lbl">Print Method</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">DTF Transfer</button><button class="pd-vbtn" onclick="selVar(this)">Sublimation</button><button class="pd-vbtn" onclick="selVar(this)">Screen Print</button></div></div>';
+    /* qty stepper */
+    html+='<div class="pd-var"><div class="pd-var-lbl">Quantity</div><div class="pd-qty-row"><button class="pd-qty-btn" onclick="adjQty(-1)">−</button><input type="number" class="pd-qty-inp" id="tsQty" value="1" min="1" max="999" oninput="clampQty(this)"><button class="pd-qty-btn" onclick="adjQty(1)">+</button><span class="pd-qty-note">Min. 1 pc &nbsp;·&nbsp; Bulk discount 10+</span></div></div>';
+    html+='</div>';
+  } else {
+    html+='<div class="pd-var"><div class="pd-var-lbl">Quantity:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">1 Piece</button><button class="pd-vbtn" onclick="selVar(this)">2–9 Pcs</button><button class="pd-vbtn" onclick="selVar(this)">10+ Bulk</button></div></div>';
+    if(p.cat==="laser"||p.cat==="cnc"){
+      html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';
+      html+='<div class="pd-var"><div class="pd-var-lbl">Acrylic Colour:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Transparent</button><button class="pd-vbtn" onclick="selVar(this)">Milky White</button><button class="pd-vbtn" onclick="selVar(this)">Black</button><button class="pd-vbtn" onclick="selVar(this)">Custom Colour</button></div></div>';
+    }
   }
   html+='<div class="pd-desc">'+p.desc+'</div>';
   html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> STL, DXF, SVG, AI, PNG, PDF</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
-  html+='<div class="pd-actions"><button class="pd-atc" onclick="addToCart('+p.id+');closeOv(\'pdOv\')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Enquire / Custom Order</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+am+interested+in:+'+encodeURIComponent(p.name)+'\')">WhatsApp us</button></div>';
+  if(p.cat==='tshirt'){
+    html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
+  } else {
+    html+='<div class="pd-actions"><button class="pd-atc" onclick="addToCart('+p.id+');closeOv(\'pdOv\')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Enquire / Custom Order</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+am+interested+in:+'+encodeURIComponent(p.name)+'\')">WhatsApp us</button></div>';
+  }
   html+='<div style="border-top:1px solid var(--bdr);padding-top:1rem;margin-top:.5rem">';
   html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem"><div style="font-size:.82rem;font-weight:700">Reviews ('+reviews.length+')</div><button style="font-size:.72rem;padding:.32rem .8rem;border:1px solid var(--bdr);border-radius:var(--r);background:transparent;cursor:pointer" onclick="openRv('+id+',\''+p.name.replace(/['"]/g,"")+'\')" >Write a Review</button></div>';
   reviews.forEach(function(r){html+='<div class="rv-card"><div class="rv-top"><div class="rv-av">'+r.av+'</div><div><div class="rv-name">'+r.name+'</div><div class="rv-date">'+r.date+'</div></div><div class="stars" style="margin-left:auto">'+renderStars(r.rating)+'</div></div><div class="rv-text">'+r.text+'</div></div>';});
@@ -1936,6 +1965,60 @@ function pdThumb(el,ico){document.querySelectorAll(".pd-thumb").forEach(function
 function pdThumbImg(el,src){document.querySelectorAll(".pd-thumb").forEach(function(t){t.classList.remove("sel");});el.classList.add("sel");var m=document.getElementById("pdMainIco");if(m)m.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:cover;">';}
 function pdThumbTxt(el,ico){document.querySelectorAll(".pd-thumb").forEach(function(t){t.classList.remove("sel");});el.classList.add("sel");var m=document.getElementById("pdMainIco");if(m)m.innerHTML=ico;}
 function selVar(el){el.parentNode.querySelectorAll(".pd-vbtn").forEach(function(b){b.classList.remove("sel");});el.classList.add("sel");}
+
+/* ── T-SHIRT CONFIGURATOR ── */
+function selClr(el){
+  el.parentNode.querySelectorAll('.pd-clr-sw').forEach(function(b){b.classList.remove('sel');});
+  el.classList.add('sel');
+}
+function adjQty(d){
+  var inp=document.getElementById('tsQty');if(!inp)return;
+  var v=parseInt(inp.value)||1;v+=d;if(v<1)v=1;if(v>999)v=999;inp.value=v;
+}
+function clampQty(inp){var v=parseInt(inp.value)||1;if(v<1)v=1;if(v>999)v=999;inp.value=v;}
+function _tsGarment(btn){
+  var g=btn.textContent.trim();
+  var noSlvNk=(g==='Cap'||g==='Tote Bag'||g==='Apron');
+  var noSz=(g==='Cap'||g==='Tote Bag');
+  var sr=document.getElementById('tsSlvRow');
+  var nr=document.getElementById('tsNkRow');
+  var szr=document.getElementById('tsSzRow');
+  if(sr)sr.style.display=noSlvNk?'none':'';
+  if(nr)nr.style.display=noSlvNk?'none':'';
+  if(szr)szr.style.display=noSz?'none':'';
+}
+function _getTsOpts(){
+  var opts={};
+  document.querySelectorAll('#pdContent .ts-cfg .pd-var').forEach(function(row){
+    if(row.style.display==='none')return;
+    var lbl=row.querySelector('.pd-var-lbl');if(!lbl)return;
+    var key=lbl.textContent.trim();
+    var clrSel=row.querySelector('.pd-clr-sw.sel');
+    if(clrSel){opts[key]=clrSel.title;return;}
+    var vbtnSel=row.querySelector('.pd-vbtn.sel');
+    if(vbtnSel){opts[key]=vbtnSel.textContent.trim();}
+  });
+  var q=document.getElementById('tsQty');if(q)opts['Quantity']=q.value;
+  return opts;
+}
+function _tsWA(name,price){
+  var opts=_getTsOpts();
+  var txt='Hi! I want to order:\n*'+name+'*\n\n';
+  var order=['Garment Type','Sleeve','Neck Style','Fabric','Size','T-Shirt Colour','Print Method','Quantity'];
+  order.forEach(function(k){if(opts[k])txt+=k+': *'+opts[k]+'*\n';});
+  txt+='\nStarting from ₹'+price+'. Please confirm & share payment link.\ncraftbiz.co.in';
+  window.open('https://wa.me/917907254065?text='+encodeURIComponent(txt),'_blank');
+}
+function _tsAddCart(id){
+  var opts=_getTsOpts();
+  var qty=parseInt((document.getElementById('tsQty')||{value:'1'}).value)||1;
+  for(var i=0;i<qty;i++)addToCart(id);
+  var p=getProd(id);
+  var note=Object.keys(opts).filter(function(k){return k!=='Quantity';}).map(function(k){return opts[k];}).join(' · ');
+  showToast('✓ '+qty+'× '+(p?p.name:'item')+' added'+(note?' ('+note+')':''));
+  closeOv('pdOv');
+}
+
 function getSampleReviews(id){
   var base=[{av:"👤",name:"Meera S.",date:"April 2025",rating:5,text:"Excellent quality and fast delivery. Laser cutting was precise. Highly recommend!"},{av:"👤",name:"Rajan K.",date:"March 2025",rating:4,text:"Good product, neat packaging. Will order again for sure."}];
   return base.concat(extraReviews[id]||[]);
