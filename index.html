@@ -1720,7 +1720,7 @@ function renderProducts(){
   list.forEach(function(p,i){
     var bg=BG[i%BG.length];
     var offPct=p.orig>0?Math.round((1-p.price/p.orig)*100):0;
-    var stockTxt=p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
+    var stockTxt=(p.cat==='gifts'||p.cat==='tshirt')?'Made to Order':p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
     var listDesc=isListView?'<div style="font-size:.74rem;color:var(--mid);line-height:1.6;margin-bottom:.4rem">'+p.desc+'</div>':"";
     html+='<div class="pc" onclick="openProduct('+p.id+')">';
     html+='<div class="pc-img" style="background:'+bg+'">';
@@ -1739,7 +1739,7 @@ function renderProducts(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
+    html+='<button class="pc-btn'+((p.cat==='tshirt'||p.cat==='gifts')?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':p.cat==='gifts'?'Upload Design &#8594;':'Add to Cart')+'</button>';
     html+='</div></div>';
   });
   g.innerHTML=html;
