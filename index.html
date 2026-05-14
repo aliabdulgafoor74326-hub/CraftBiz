@@ -2082,7 +2082,8 @@ function openProduct(id){
     }
   }
   html+='<div class="pd-desc">'+p.desc+'</div>';
-  html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> STL, DXF, SVG, AI, PNG, PDF</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
+  var _fmt=p.cat==='gifts'||p.cat==='tshirt'?'PDF, PNG, JPG, SVG, PSD':p.cat==='laser'||p.cat==='cnc'?'DXF, SVG, AI, PDF, PNG':p.cat==='3d'?'STL, OBJ, STP, STEP':'PDF, PNG, JPG, SVG, AI';
+  html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> '+_fmt+'</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
   } else if(p.cat==='gifts'){
