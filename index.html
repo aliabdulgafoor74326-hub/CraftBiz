@@ -1880,7 +1880,7 @@ function openService(cat){
       h+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
       h+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span><span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
       h+='<div class="pc-note">'+p.note+'</div></div>';
-      h+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
+      h+='<button class="pc-btn'+((p.cat==='tshirt'||p.cat==='gifts')?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':p.cat==='gifts'?'Upload Design &#8594;':'Add to Cart')+'</button>';
       h+='</div></div>';
     });
     h+='</div>';
@@ -2031,6 +2031,8 @@ function openProduct(id){
   html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> STL, DXF, SVG, AI, PNG, PDF</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
+  } else if(p.cat==='gifts'){
+    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+want+to+customise:+'+encodeURIComponent(p.name)+'.+Please+guide+me.\',\'_blank\')">WhatsApp for Quote</button></div>';
   } else {
     html+='<div class="pd-actions"><button class="pd-atc" onclick="addToCart('+p.id+');closeOv(\'pdOv\')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Enquire / Custom Order</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+am+interested+in:+'+encodeURIComponent(p.name)+'\')">WhatsApp us</button></div>';
   }
@@ -2049,11 +2051,10 @@ function selVar(el){el.parentNode.querySelectorAll(".pd-vbtn").forEach(function(
 /* ── SMART ADD-TO-CART: opens configurator for t-shirts ── */
 function pcAddToCart(id){
   var p=getProd(id);
-  if(p&&p.cat==='tshirt'){
-    openProduct(id);
-  } else {
-    addToCart(id);
-  }
+  if(!p)return;
+  if(p.cat==='tshirt'){openProduct(id);}
+  else if(p.cat==='gifts'){openEnq(p.name);}
+  else{addToCart(id);}
 }
 
 /* ── T-SHIRT CONFIGURATOR ── */
@@ -3322,7 +3323,7 @@ renderProducts=function(){
   list.forEach(function(p,i){
     var bg=BG_arr[i%BG_arr.length]||'#f0f0ee';
     var offPct=p.orig>0?Math.round((1-p.price/p.orig)*100):0;
-    var stockTxt=p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
+    var stockTxt=p.cat==='gifts'?'Made to Order':p.stock==="in"?"In Stock":p.stock==="low"?"Low Stock":"Out of Stock";
     var listDesc=isListView?'<div style="font-size:.74rem;color:var(--mid);line-height:1.6;margin-bottom:.4rem">'+p.desc+'</div>':"";
     html+='<div class="pc" onclick="openProduct('+p.id+')">';
     html+='<div class="pc-img" style="background:'+bg+'">';
@@ -3342,7 +3343,7 @@ renderProducts=function(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button>';
+    html+='<button class="pc-btn'+((p.cat==='tshirt'||p.cat==='gifts')?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':p.cat==='gifts'?'Upload Design &#8594;':'Add to Cart')+'</button>';
     html+='<button class="pc-share" onclick="shareProduct(event,'+p.id+')" title="Share on WhatsApp">Share ↗</button>';
     html+='</div></div>';
   });
