@@ -458,7 +458,11 @@ function enterAndScroll(sec){
     <div class="mob-lnk" onclick="showPage('authPage');toggleMenu()" data-en="My Account" data-ml="എന്റെ അക്കൗണ്ട്">My Account</div>
     <div class="mob-lnk" onclick="openCart();toggleMenu()" data-en="Cart" data-ml="കാർട്ട്">Cart</div>
     <div class="mob-lnk" onclick="showPage('adminPage');toggleMenu()" data-en="Admin Dashboard" data-ml="അഡ്മിൻ ഡാഷ്ബോർഡ്">Admin Dashboard</div>
-    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1)">
+    <div class="mob-toggles">
+      <button class="mob-tog-btn" onclick="toggleDark()"><span class="darkToggleAll mob-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span><span data-en="Dark Mode" data-ml="ഡാർക്ക് മോഡ്">Dark Mode</span></button>
+      <button class="mob-tog-btn" onclick="toggleLang()"><span id="langToggleMob" class="mob-ico">ML</span><span data-en="Language" data-ml="ഭാഷ">Language</span></button>
+    </div>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.08)">
       <a href="tel:7907254065" style="font-size:.88rem;font-weight:700;color:#fff;display:block;margin-bottom:.4rem">📞 79072 54065</a>
       <div style="font-size:.7rem;color:rgba(255,255,255,.35)">Mon–Sat 9AM–6PM · 24/7 WhatsApp</div>
     </div>
@@ -3206,8 +3210,12 @@ function toggleLang(){
 }
 function _applyLang(){
   var isML=_curLang==='ml';
+  /* nav lang button */
   var btn=document.getElementById('langToggle');
   if(btn)btn.textContent=isML?'EN':'ML';
+  /* mobile lang indicator */
+  var mob=document.getElementById('langToggleMob');
+  if(mob)mob.textContent=isML?'EN':'ML';
   /* plain text elements */
   document.querySelectorAll('[data-en]').forEach(function(el){
     el.textContent=isML?(el.dataset.ml||el.dataset.en):el.dataset.en;
