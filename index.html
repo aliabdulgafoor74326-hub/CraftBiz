@@ -120,6 +120,7 @@ function enterAndScroll(sec){
   <div class="cd-hdr"><h3>Cart (<span id="cartCountHdr">0</span>)</h3><button class="xbtn" onclick="closeCart()">✕</button></div>
   <div class="cd-body" id="cartBody"></div>
   <div class="cd-footer">
+    <div id="freeDelBar"></div>
     <div class="cd-sub"><span>Subtotal (<span id="cartSubCnt">0</span> items):</span><strong>₹<span id="cartTotal">0</span></strong></div>
     <button class="btn btn-dark btn-full btn-pill" style="margin-bottom:.4rem" onclick="closeCart();showPage('ckPage')">Proceed to Checkout </button>
     <button class="btn btn-border btn-full btn-pill" onclick="closeCart()">Continue Shopping</button>
@@ -2117,7 +2118,7 @@ function openProduct(id){
   }
   html+='<div class="pd-desc">'+p.desc+'</div>';
   var _fmt=p.cat==='gifts'||p.cat==='tshirt'?'PDF, PNG, JPG, SVG, PSD':p.cat==='laser'||p.cat==='cnc'?'DXF, SVG, AI, PDF, PNG':p.cat==='3d'?'STL, OBJ, STP, STEP':'PDF, PNG, JPG, SVG, AI';
-  html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> '+_fmt+'</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
+  html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India &nbsp;·&nbsp; <span style="color:var(--accent);font-weight:700">Free on ₹999+</span></div><div><strong>File Formats:</strong> '+_fmt+'</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
   } else if(p.tshirtConfig){
@@ -2125,7 +2126,7 @@ function openProduct(id){
   } else if(p.hoodie){
     html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_hdWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
   } else if(p.cat==='gifts'){
-    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_giftOrderWA(\''+p.name.replace(/['"]/g,"")+'\')">WhatsApp for Quote</button></div>';
+    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="_giftUploadDesign(\''+p.name.replace(/['"]/g,"")+'\','+(!!p.gsm)+')">Upload Your Design &#8593;</button><button class="pd-wa" onclick="_giftOrderWA(\''+p.name.replace(/['"]/g,"")+'\')">WhatsApp for Quote</button></div>';
   } else {
     html+='<div class="pd-actions"><button class="pd-atc" onclick="addToCart('+p.id+');closeOv(\'pdOv\')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Enquire / Custom Order</button><button class="pd-wa" onclick="window.open(\'https://wa.me/917907254065?text=Hi,+I+am+interested+in:+'+encodeURIComponent(p.name)+'\')">WhatsApp us</button></div>';
   }
@@ -2229,6 +2230,19 @@ function _tsAddCart(id){
   closeOv('pdOv');
 }
 
+function _giftUploadDesign(name,requiresGsm){
+  if(requiresGsm){
+    var gsmSel=document.querySelector('.gsm-btn.sel');
+    if(!gsmSel){
+      var gsmRow=document.getElementById('gsmRow');
+      if(gsmRow){gsmRow.classList.add('ts-err');setTimeout(function(){gsmRow.classList.remove('ts-err');},2000);}
+      showToast('⚠ Please select a paper thickness (GSM) first');
+      return;
+    }
+  }
+  closeOv('pdOv');
+  openEnq(name);
+}
 function _hdValidate(){
   var missing=[];
   var clrRow=document.getElementById('hdClrRow');
@@ -2382,7 +2396,20 @@ function renderCart(){
   var body=document.getElementById("cartBody"),cnt=getCartCount();
   document.getElementById("cartCountHdr").textContent=cnt;
   document.getElementById("cartSubCnt").textContent=cnt;
-  document.getElementById("cartTotal").textContent=getTotal().toLocaleString("en-IN");
+  var total=getTotal();
+  document.getElementById("cartTotal").textContent=total.toLocaleString("en-IN");
+  var fdb=document.getElementById("freeDelBar");
+  if(fdb){
+    var threshold=999;
+    if(total===0){fdb.innerHTML='';}
+    else if(total>=threshold){
+      fdb.innerHTML='<div class="fdel-bar fdel-done"><span>🎉 Free delivery unlocked!</span></div>';
+    } else {
+      var rem=threshold-total;
+      var pct=Math.round((total/threshold)*100);
+      fdb.innerHTML='<div class="fdel-bar"><div class="fdel-lbl">Add <strong>₹'+rem+'</strong> more for free delivery</div><div class="fdel-track"><div class="fdel-fill" style="width:'+pct+'%"></div></div></div>';
+    }
+  }
   if(!cart.length){body.innerHTML='<div class="cd-empty"><div class="cd-empty-ico">🛍️</div><p>Your cart is empty</p><button class="btn btn-dark btn-sm btn-pill" style="margin-top:.4rem" onclick="closeCart()">Browse Products</button></div>';return;}
   var html="";
   cart.forEach(function(c){var p=getProd(c.id);if(!p)return;html+='<div class="ci"><div class="ci-img">'+p.e+'</div><div class="ci-info"><div class="ci-name">'+p.name+'</div><div class="ci-price">₹'+(p.price*c.qty).toLocaleString("en-IN")+'</div><div class="ci-ctrl"><button class="ci-qb" onclick="changeQty('+c.id+',-1)">−</button><span class="ci-qn">'+c.qty+'</span><button class="ci-qb" onclick="changeQty('+c.id+',1)">+</button><span class="ci-rm" onclick="removeFromCart('+c.id+')">Remove</span></div></div></div>';});
