@@ -488,6 +488,24 @@ function enterAndScroll(sec){
     </div>
   </div>
 
+  <!-- STORE -->
+  <div class="sec store-sec" id="storeSec">
+    <div class="sec-lbl">Ready to Ship</div>
+    <h2 class="sec-title">Our Store</h2>
+    <p class="sec-sub">In-stock items — order today, delivered within 2–5 days.</p>
+    <div class="store-cats" id="storeCatBtns">
+      <button class="store-cat active" onclick="filterStore(this,'all')">All</button>
+      <button class="store-cat" onclick="filterStore(this,'laser')">Laser &amp; Acrylic</button>
+      <button class="store-cat" onclick="filterStore(this,'homedecor')">Home Decor</button>
+      <button class="store-cat" onclick="filterStore(this,'resin')">Resin Art</button>
+      <button class="store-cat" onclick="filterStore(this,'stationery')">Stationery</button>
+    </div>
+    <div class="prod-grid" id="storeReadyGrid" style="margin-top:1.5rem"></div>
+    <div style="text-align:center;margin-top:2rem">
+      <button class="btn btn-dark btn-pill" onclick="openCatalog()">Browse All Products &rarr;</button>
+    </div>
+  </div>
+
   <!-- END OF MONTH SALE -->
   <div class="sale-banner" id="saleSection">
     <div class="sale-banner-eyebrow">Limited Time &nbsp;·&nbsp; May 2026</div>
@@ -607,15 +625,6 @@ function enterAndScroll(sec){
         <a href="https://wa.me/917907254065" class="btn btn-pill btn-lg" style="background:#25d366;color:#fff;border:none">WhatsApp us</a>
       </div>
     </div>
-  </div>
-
-  <!-- STORE READY ITEMS -->
-  <div class="sec" style="background:var(--white)">
-    <div class="sec-lbl">In stock</div>
-    <h2 class="sec-title">Store Items</h2>
-    <p class="sec-sub">In-stock items ready to ship immediately.</p>
-    <div class="prod-grid" id="storeReadyGrid" style="margin-top:2rem"></div>
-    <div style="text-align:center;margin-top:1.5rem"><button class="btn btn-dark btn-pill" onclick="openCatalog()">Browse All Products </button></div>
   </div>
 
   <!-- HOW IT'S MADE -->
@@ -1981,10 +1990,22 @@ function _hmpOrder(){
   window.open('https://wa.me/917907254065?text='+encodeURIComponent(msg),'_blank');
 }
 
+var _storeCat='all';
+function filterStore(btn,cat){
+  _storeCat=cat;
+  document.querySelectorAll('.store-cat').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderStoreReady();
+}
 function renderStoreReady(){
   var g=document.getElementById("storeReadyGrid");
   if(!g)return;
-  var ready=PRODUCTS.filter(function(p){return p.ready&&p.cat!=='tshirt'&&p.cat!=='gifts';}).slice(0,8);
+  var all=PRODUCTS.filter(function(p){return p.ready&&p.cat!=='tshirt'&&p.cat!=='gifts';});
+  var ready=_storeCat==='all'?all:all.filter(function(p){return p.cat===_storeCat;});
+  if(ready.length===0){
+    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--mid);font-size:.85rem">No products in this category yet.</div>';
+    return;
+  }
   var html="";
   ready.forEach(function(p,i){
     var bg=BG[i%BG.length];
@@ -1992,10 +2013,11 @@ function renderStoreReady(){
     html+='<div class="pc" onclick="openProduct('+p.id+')">';
     html+='<div class="pc-img" style="background:'+bg+'">';
     var pImgs2=p.imgs&&p.imgs.length>0?p.imgs:[];
-    if(pImgs2.length>0){html+='<img src="'+pImgs2[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}html+='<div class="pc-img-ph" style="'+( pImgs2.length>0 ? 'display:none' : '' )+'">'+p.e+'</div>';
-    html+=(p.orig?'<div class="pc-flag bdg-gd">Sale</div>':'<div class="pc-flag bdg-gn">Ready</div>');
-    html+='<div class="pc-stock">In Stock</div>';
-    html+='<div class="pc-wish'+(isInWl(p.id)?" active":"")+'\" onclick="event.stopPropagation();toggleWl('+p.id+')" id="pw2-'+p.id+'">♡</div>';
+    if(pImgs2.length>0){html+='<img src="'+pImgs2[0]+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" onerror="_imgFail(this)">';}
+    html+='<div class="pc-img-ph" style="'+(pImgs2.length>0?'display:none':'')+'">'+p.e+'</div>';
+    html+=(p.orig?'<div class="pc-flag bdg-gd">Sale</div>':'<div class="pc-flag bdg-gn">In Stock</div>');
+    html+='<div class="pc-stock">Ships in 2–5 days</div>';
+    html+='<div class="pc-wish'+(isInWl(p.id)?' active':'')+'" onclick="event.stopPropagation();toggleWl('+p.id+')" id="pw2-'+p.id+'">♡</div>';
     html+='</div>';
     html+='<div class="pc-body"><div class="pc-cat">'+(CAT_LABELS[p.cat]||p.cat)+'</div>';
     html+='<div class="pc-name">'+p.name+'</div>';
@@ -2004,7 +2026,8 @@ function renderStoreReady(){
     html+='<div class="pc-price-row"><div class="pc-price-lbl">Starting from</div>';
     html+='<div><span class="pc-price"><span class="sym">₹</span>'+p.price+'</span>'+(p.orig?'<span class="pc-orig">₹'+p.orig+'</span> <span class="pc-off">-'+offPct+'%</span>':'')+'</div>';
     html+='<div class="pc-note">'+p.note+'</div></div>';
-    html+='<button class="pc-btn'+(p.cat==='tshirt'?' pc-cfg':'')+'" onclick="event.stopPropagation();pcAddToCart('+p.id+')">'+(p.cat==='tshirt'?'Customise &#8594;':'Add to Cart')+'</button></div></div>';
+    html+='<button class="pc-btn" onclick="event.stopPropagation();pcAddToCart('+p.id+')">Add to Cart</button>';
+    html+='</div></div>';
   });
   g.innerHTML=html;
 }
