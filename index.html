@@ -1580,7 +1580,8 @@ var PRODUCTS=[
   {id:32,e:"💳",name:"NFC Smart ID Card",cat:"gifts",imgs:["images/stationery/pvc-id-cards.jpg"],badge:"bdg-gn",badgeTxt:"New",desc:"PVC ID card with embedded NFC chip. Tap to instantly share contact details, website or portfolio.",price:150,orig:200,note:"per card",rating:4.8,rc:41,stock:"in",ready:true},
   {id:33,e:"📓",name:"Branded Diary / Planner",cat:"gifts",imgs:["images/gifts/diary.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Company diary or planner with logo embossed or printed on cover. A5 & A4 available.",price:200,orig:280,note:"per diary",rating:4.7,rc:72,stock:"in",ready:true},
   {id:34,e:"🖊️",name:"Branded Pen",cat:"gifts",imgs:["images/gifts/pen.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Laser engraved or UV printed pens with company name and logo. Metal & plastic variants.",price:45,orig:0,note:"per pen · min 10",rating:4.6,rc:156,stock:"in",ready:true},
-  {id:35,e:"👕",name:"Corporate T-Shirt (Logo)",cat:"gifts",imgs:["images/tshirt/tshirt-printing.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Company uniform / promo T-shirt with your logo printed via DTF. Fully customised — garment colour, size, print placement. Bulk rates for 10+ pieces.",price:199,orig:0,note:"per shirt · made to order",rating:4.7,rc:89,stock:"in",ready:false},
+  {id:35,e:"👕",name:"Corporate T-Shirt (Logo)",cat:"gifts",imgs:["images/tshirt/tshirt-printing.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Company uniform / promo T-shirt with your logo printed via DTF. Fully customised — garment type, collar, sleeve, fabric, colour and size. Bulk rates for 10+ pieces.",price:199,orig:0,note:"per shirt · made to order",rating:4.7,rc:89,stock:"in",ready:false,tshirtConfig:true},
+  {id:37,e:"🧥",name:"Customised Hoodie",cat:"gifts",imgs:["images/tshirt/hoodie.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Premium fleece hoodie with your logo, company name or any design. DTF transfer or embroidery print. Pick your colour and size — fully made to order. Bulk rates for 10+ pieces.",price:499,orig:0,note:"per hoodie · made to order",rating:4.8,rc:28,stock:"in",ready:false,hoodie:true},
   {id:12,e:"🔥",name:"Engraving & Heat Press",cat:"gifts",imgs:["images/gifts/engraving-heat-press.jpg"],badge:"bdg-dk",badgeTxt:"Custom",desc:"Laser engraving on wood, leather, metal. Heat press on fabrics.",price:100,orig:0,note:"per item",rating:4.6,rc:118,stock:"in",ready:false},
   {id:13,e:"🪴",name:"Acrylic Home Decor",cat:"homedecor",imgs:["images/homedecor/acrylic-decor.jpg"],badge:"bdg-ac",badgeTxt:"Popular",desc:"Laser-cut acrylic decor — shelf pieces, table art, wall panels.",price:250,orig:350,note:"per piece",rating:4.7,rc:143,stock:"in",ready:true},
   {id:14,e:"🖋️",name:"Calligraphy Wall Art",cat:"homedecor",imgs:["images/homedecor/calligraphy-wall-art.jpg"],badge:"bdg-gn",badgeTxt:"New",desc:"Laser-cut calligraphy. Quotes, names, Quran verses. Acrylic or MDF.",price:299,orig:0,note:"starting · size-based",rating:4.9,rc:88,stock:"in",ready:true},
@@ -2049,7 +2050,7 @@ function openProduct(id){
   html+='<div class="pd-rat-row"><div class="stars">'+renderStars(p.rating)+'</div><span class="rc">'+p.rating+' · '+p.rc+' reviews</span></div>';
   var priceLbl=p.gsm?'Price changes with paper thickness':p.typeOpts?'Price changes with type selected':'Starting from';
   html+='<div class="pd-price-box"><div class="pd-price-lbl">'+priceLbl+'</div><div><span class="pd-price-v"><span class="pd-price-sym">₹</span><span id="pdPriceNum">'+p.price+'</span></span>'+(p.orig?'<span class="pd-price-orig">₹'+p.orig+'</span><span class="pd-price-off"> -'+offPct+'%</span>':'')+'</div><div class="pd-price-note" id="pdPriceNote">'+p.note+'</div></div>';
-  if(p.cat==='tshirt'){
+  if(p.cat==='tshirt'||p.tshirtConfig){
     html+='<div class="ts-cfg">';
     /* garment */
     html+='<div class="pd-var"><div class="pd-var-lbl">Garment Type</div><div class="pd-var-opts"><button class="pd-vbtn ts-g sel" onclick="selVar(this);_tsGarment(this)">T-Shirt</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Hoodie</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Polo</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Cap</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Tote Bag</button><button class="pd-vbtn ts-g" onclick="selVar(this);_tsGarment(this)">Apron</button></div></div>';
@@ -2099,6 +2100,16 @@ function openProduct(id){
         html+='</div><div style="font-size:.66rem;color:var(--mid);margin-top:.25rem">All colours same rate · ₹220 per mug</div></div>';
       }
     }
+    if(p.hoodie){
+      html+='<div class="pd-var ts-req" id="hdClrRow"><div class="pd-var-lbl">Hoodie Colour <span class="req-star">*</span></div><div class="pd-clr-opts">';
+      [{c:'#111',n:'Black'},{c:'#f5f5f5',n:'White',b:'#ccc'},{c:'#1a2a6c',n:'Navy Blue'},{c:'#555',n:'Grey'},{c:'#5a0a14',n:'Maroon'},{c:'#4a5a2a',n:'Olive Green'},{c:'#5a3010',n:'Brown'},{c:'#c8401a',n:'Brick Red'},{c:'#2a4a6a',n:'Steel Blue'}].forEach(function(cl){
+        html+='<button class="pd-clr-sw" style="background:'+cl.c+';border-color:'+(cl.b||cl.c)+';" onclick="selClr(this)" title="'+cl.n+'"><span class="pd-clr-tt">'+cl.n+'</span></button>';
+      });
+      html+='</div><div style="font-size:.66rem;color:var(--mid);margin-top:.25rem">All colours same rate · ₹499 per hoodie</div></div>';
+      html+='<div class="pd-var ts-req" id="hdSzRow"><div class="pd-var-lbl">Size <span class="req-star">*</span></div><div class="pd-var-opts"><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XS</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">S</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">M</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">L</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XL</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">XXL</button><button class="pd-vbtn" onclick="selVar(this);_clearErr(this)">3XL</button></div></div>';
+      html+='<div class="pd-var"><div class="pd-var-lbl">Print Method</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">DTF Transfer</button><button class="pd-vbtn" onclick="selVar(this)">Embroidery</button><button class="pd-vbtn" onclick="selVar(this)">Screen Print</button></div></div>';
+      html+='<div class="pd-var"><div class="pd-var-lbl">Quantity</div><div class="pd-qty-row"><button class="pd-qty-btn" onclick="adjQty(-1)">−</button><input type="number" class="pd-qty-inp" id="hdQty" value="1" min="1" max="999" oninput="clampQty(this)"><button class="pd-qty-btn" onclick="adjQty(1)">+</button><span class="pd-qty-note">Min. 1 pc · Bulk discount 10+</span></div></div>';
+    }
     if(p.cat==="laser"||p.cat==="cnc"){
       html+='<div class="pd-var"><div class="pd-var-lbl">Material:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">MDF 2mm</button><button class="pd-vbtn" onclick="selVar(this)">MDF 4mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 3mm</button><button class="pd-vbtn" onclick="selVar(this)">Acrylic 5mm</button></div></div>';
       html+='<div class="pd-var"><div class="pd-var-lbl">Acrylic Colour:</div><div class="pd-var-opts"><button class="pd-vbtn sel" onclick="selVar(this)">Transparent</button><button class="pd-vbtn" onclick="selVar(this)">Milky White</button><button class="pd-vbtn" onclick="selVar(this)">Black</button><button class="pd-vbtn" onclick="selVar(this)">Custom Colour</button></div></div>';
@@ -2109,6 +2120,10 @@ function openProduct(id){
   html+='<div class="pd-meta"><div><strong>Min. Order:</strong> 1 piece (bulk discounts on 10+)</div><div><strong>Turnaround:</strong> 2–5 business days</div><div><strong>Delivery:</strong> Pan India</div><div><strong>File Formats:</strong> '+_fmt+'</div><div><strong>Customisation:</strong> Fully customisable</div></div>';
   if(p.cat==='tshirt'){
     html+='<div class="pd-actions"><button class="pd-atc" onclick="_tsAddCart('+p.id+')">Add to Cart</button><button class="pd-enq" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Custom Design Upload</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
+  } else if(p.tshirtConfig){
+    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_tsWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
+  } else if(p.hoodie){
+    html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_hdWA(\''+p.name.replace(/['"]/g,"")+'\','+p.price+')">Order via WhatsApp</button></div>';
   } else if(p.cat==='gifts'){
     html+='<div class="pd-actions"><button class="pd-atc" style="background:var(--accent)" onclick="closeOv(\'pdOv\');openEnq(\''+p.name.replace(/['"]/g,"")+'\')" >Upload Your Design &#8593;</button><button class="pd-wa" onclick="_giftOrderWA(\''+p.name.replace(/['"]/g,"")+'\')">WhatsApp for Quote</button></div>';
   } else {
@@ -2197,7 +2212,7 @@ function _tsWA(name,price){
   if(missing.length){showToast('⚠ Please select: '+missing.join(' & '));return;}
   var opts=_getTsOpts();
   var txt='Hi! I want to order:\n*'+name+'*\n\n';
-  var order=['Garment Type','Sleeve','Neck Style','Fabric','Size','T-Shirt Colour','Print Method','Quantity'];
+  var order=['Garment Type','Sleeve','Neck Style','Fabric','Size','T-Shirt Colour','Garment Colour','Print Method','Quantity'];
   order.forEach(function(k){if(opts[k])txt+=k+': *'+opts[k]+'*\n';});
   txt+='\nStarting from ₹'+price+'. Please confirm & share payment link.\ncraftbiz.co.in';
   window.open('https://wa.me/917907254065?text='+encodeURIComponent(txt),'_blank');
@@ -2212,6 +2227,38 @@ function _tsAddCart(id){
   var note=['Size','T-Shirt Colour','Fabric','Sleeve'].map(function(k){return opts[k];}).filter(Boolean).join(' · ');
   showToast('✓ '+qty+'× '+(p?p.name:'item')+' added'+(note?' — '+note:''));
   closeOv('pdOv');
+}
+
+function _hdValidate(){
+  var missing=[];
+  var clrRow=document.getElementById('hdClrRow');
+  if(clrRow&&!clrRow.querySelector('.pd-clr-sw.sel')){
+    missing.push('Hoodie Colour');
+    clrRow.classList.add('ts-err');
+    setTimeout(function(){clrRow.classList.remove('ts-err');},2000);
+  }
+  var szRow=document.getElementById('hdSzRow');
+  if(szRow&&!szRow.querySelector('.pd-vbtn.sel')){
+    missing.push('Size');
+    szRow.classList.add('ts-err');
+    setTimeout(function(){szRow.classList.remove('ts-err');},2000);
+  }
+  return missing;
+}
+function _hdWA(name,price){
+  var missing=_hdValidate();
+  if(missing.length){showToast('⚠ Please select: '+missing.join(' & '));return;}
+  var clrSw=document.querySelector('#hdClrRow .pd-clr-sw.sel');
+  var szBtn=document.querySelector('#hdSzRow .pd-vbtn.sel');
+  var pmBtn=document.querySelector('#pdContent .pd-var:nth-of-type(3) .pd-vbtn.sel');
+  var qty=(document.getElementById('hdQty')||{value:'1'}).value;
+  var txt='Hi! I want to order:\n*'+name+'*\n\n';
+  if(clrSw)txt+='Colour: *'+clrSw.title+'*\n';
+  if(szBtn)txt+='Size: *'+szBtn.textContent.trim()+'*\n';
+  if(pmBtn)txt+='Print Method: *'+pmBtn.textContent.trim()+'*\n';
+  txt+='Quantity: *'+qty+'*\n';
+  txt+='\nStarting from ₹'+price+' per hoodie. Please confirm & share payment link.\ncraftbiz.co.in';
+  window.open('https://wa.me/917907254065?text='+encodeURIComponent(txt),'_blank');
 }
 
 function getSampleReviews(id){
