@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api *)",
+      "Bash(git -C \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft\" log --oneline -5)",
+      "WebFetch(domain:aliabdulgafoor74326-hub.github.io)",
+      "Bash(git commit -m ' *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(git commit -m 'change invoice print size from A5 to A4 \\(210x297mm\\) *)",
+      "Bash(git commit -m 'remove signature row from invoice *)"
+    ]
+  }
+}

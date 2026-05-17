@@ -9,7 +9,21 @@
       "Bash(npx cspell *)",
       "Bash(npx --yes cspell \"page 1.html\")",
       "Bash(npx --yes cspell \"craftbiz.css\")",
-      "Bash(awk 'NR>=993 && NR<=1015' \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft/page 1.html\")"
+      "Bash(awk 'NR>=993 && NR<=1015' \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft/page 1.html\")",
+      "Bash(git mv *)",
+      "Bash(git -C \"c:/Users/ALI ABDUL GAFOOR/Desktop/craft\" remote -v)",
+      "Bash(git commit -m 'move Terms & Conditions to page 2 of A4 printout *)",
+      "Bash(python -c ' *)",
+      "Bash(git commit -m ' *)",
+      "Bash(node -e ' *)",
+      "Bash(dir \"c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\")",
+      "Bash(git rm *)",
+      "Bash(node)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const css=fs.readFileSync\\('craftbiz.css','utf8'\\);let open=0,close=0;for\\(const c of css\\){if\\(c==='{'\\)open++;if\\(c==='}'\\)close++;}console.log\\('Open braces:',open,'Close braces:',close,'Balanced:',open===close\\);\")",
+      "Bash(Select-String -Path \"c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\\\\index.html\" -Pattern \"</script>\")",
+      "Bash(Select-Object -Last 5)",
+      "Bash(Format-Table LineNumber, Line -AutoSize)",
+      "Bash(node -e \"const fs=require\\('fs'\\);const css=fs.readFileSync\\('c:/Users/ALI ABDUL GAFOOR/Desktop/craft/craftbiz.css','utf8'\\);let o=0,c=0;for\\(const ch of css\\){if\\(ch==='{'\\)o++;if\\(ch==='}'\\)c++;}console.log\\('CSS braces — open:',o,'close:',c,'balanced:',o===c\\);\")"
     ]
   }
 }

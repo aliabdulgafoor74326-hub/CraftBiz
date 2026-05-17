@@ -1,9 +1,6 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignoreRegExpList": [
-    "[\\u0D00-\\u0D7F]+"
-  ],
   "words": [
     "craftbiz", "ncraftbiz", "tshirt", "homedecor", "nojekyll",
     "typeOpts", "gsm", "webp", "WEBP",
@@ -24,6 +21,8 @@
 
     "Fibreboard", "Pantone", "PETG", "GSTIN",
     "yourname", "Tshirt",
+    "Keychain", "keychains", "sublimation", "Sublimation",
+    "estimator", "sparkle", "medallion", "swatch", "swatches", "teak",
 
     "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
     "ENDMAY", "NEWUSER", "NEWYEAR",

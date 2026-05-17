@@ -18,16 +18,29 @@
   "editor.rulers": [120],
   "editor.scrollBeyondLastLine": false,
   "editor.foldingImportsByDefault": true,
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.renderWhitespace": "boundary",
+  "editor.suggest.insertMode": "replace",
 
   // ── Emmet (HTML auto-complete) ────────────────────────────────
   "emmet.includeLanguages": { "html": "html" },
   "emmet.triggerExpansionOnTab": true,
+
+  // ── Files ─────────────────────────────────────────────────────
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
 
   // ── Live Server ───────────────────────────────────────────────
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.port": 5500,
   "liveServer.settings.CustomBrowser": "chrome",
   "liveServer.settings.NoBrowser": false,
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**", ".git/**", ".claude/**", "*.md", "*.txt"
+  ],
 
   // ── Explorer: hide clutter ────────────────────────────────────
   "files.exclude": {
@@ -42,12 +55,13 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "index.html": "manifest.json, sw.js, CNAME, .nojekyll, README.md"
+    "index.html": "manifest.json, sw.js, CNAME, .nojekyll, README.md, sitemap.xml, robots.txt, 404.html"
   },
 
   // ── Search ────────────────────────────────────────────────────
   "search.exclude": {
-    "**/.git": true
+    "**/.git": true,
+    "**/images": true
   },
 
   // ── Git ───────────────────────────────────────────────────────
@@ -55,11 +69,6 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "gitlens.hovers.currentLine.over": "line",
-
-  // ── Spellcheck: ignore Malayalam Unicode script ───────────────
-  "cSpell.ignoreRegExpList": [
-    "[\\u0D00-\\u0D7F]+"
-  ],
 
   // ── Spellcheck whitelist ──────────────────────────────────────
   "cSpell.words": [
@@ -86,6 +95,7 @@
     // ── Materials & printing terms ───────────────────────────────
     "Fibreboard", "Pantone", "PETG", "GSTIN",
     "yourname", "Tshirt",
+    "Keychain","keychains","sublimation","Sublimation","estimator","sparkle","medallion","swatch","swatches","teak",
 
     // ── Payment & codes ──────────────────────────────────────────
     "NEFT", "Paytm", "BHIM", "HDFC", "ICICI", "Kotak",
@@ -94,7 +104,6 @@
     // ── Festivals ────────────────────────────────────────────────
     "Holi", "HOLI", "Onam", "ONAM",
 
-    // ── Customer names (testimonials) ────────────────────────────
     // ── More British English ─────────────────────────────────────
     "specialise", "unauthorised", "aluminium", "Aluminium",
     "décor",

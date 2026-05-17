@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /.claude/
+Disallow: /.git/
+
+Sitemap: https://craftbiz.co.in/sitemap.xml
