@@ -33,6 +33,14 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
 
+  // ── HTML / CSS validation ─────────────────────────────────────
+  // Inline styles use CSS custom properties from craftbiz.css.
+  // VS Code can't resolve var(--x) in style="" without the sheet,
+  // so inline-style validation generates hundreds of false positives.
+  "html.validate.styles": false,
+  "css.lint.unknownProperties": "ignore",
+  "css.lint.unknownVendorSpecificProperties": "ignore",
+
   // ── Live Server ───────────────────────────────────────────────
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.port": 5500,
@@ -83,7 +91,10 @@
     "insta", "fbtn", "srch",
     "chdr", "csel", "bcol", "bbar", "blbl",
     "cust", "finp", "tabular", "nums",
-    "wa-float", "pc-img",
+    "wa-float", "pc-img", "waNotif", "notif", "fdel",
+
+    // ── Indian cultural & wedding terms ─────────────────────────
+    "Mehndi",
 
     // ── British English (used throughout the site) ───────────────
     "colour", "colours", "Colour", "Colours", "COLOUR", "Multicolour",
