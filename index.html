@@ -241,7 +241,7 @@ function enterAndScroll(sec){
       <div class="conf-check">✅</div>
       <h2>Order Confirmed!</h2>
       <p>Thank you! Your order is received and we are on it.</p>
-      <div class="conf-ord-id" id="confOrdId">#CB-2025-001</div>
+      <div class="conf-ord-id" id="confOrdId">#CB-2026-001</div>
     </div>
     <div class="conf-inner">
       <div style="margin-bottom:1.3rem">
@@ -889,7 +889,7 @@ function enterAndScroll(sec){
       </div>
     </div>
     <div class="footer-bot">
-      <span>© 2025 Craft Biz. All rights reserved. · Calicut, Kerala, India</span>
+      <span>© 2026 Craft Biz. All rights reserved. · Calicut, Kerala, India</span>
       <span><a onclick="showPage('termsPage')">Terms</a> · <a href="mailto:craftbizbiz@gmail.com">craftbizbiz@gmail.com</a></span>
     </div>
   </footer>
@@ -1452,7 +1452,7 @@ function enterAndScroll(sec){
         </div>
         <div class="ad-charts">
           <div class="ad-card">
-            <div class="ad-chdr"><h3>Monthly Revenue (₹)</h3><select class="ad-csel"><option>2025</option><option>2024</option></select></div>
+            <div class="ad-chdr"><h3>Monthly Revenue (₹)</h3><select class="ad-csel"><option>2026</option><option>2025</option><option>2024</option></select></div>
             <div class="bar-chart" id="adBar"></div>
           </div>
           <div class="ad-card">
@@ -1600,7 +1600,7 @@ function enterAndScroll(sec){
   </nav>
   <div class="terms-body">
     <h1>Terms &amp; Conditions</h1>
-    <div class="updated">Last updated: January 2025 · craftbiz.co.in · Calicut, Kerala, India</div>
+    <div class="updated">Last updated: May 2026 · craftbiz.co.in · Calicut, Kerala, India</div>
     <p>Welcome to Craft Biz. By using our website craftbiz.co.in and services, you agree to the following terms. Please read carefully before placing an order.</p>
     <h2>1. Acceptance of Terms</h2>
     <p>By accessing craftbiz.co.in, you agree to comply with and be bound by these Terms and Conditions. If you disagree, please do not use our services.</p>
@@ -2781,7 +2781,7 @@ function processPayment(){
 /* ─── ORDER CONFIRM ─── */
 function renderConfirmation(savedCart,savedCoupon){
   var oi=document.getElementById("confOrdId");
-  if(oi)oi.textContent="#CB-2025-00"+Math.floor(Math.random()*900+100);
+  if(oi)oi.textContent="#CB-2026-00"+Math.floor(Math.random()*900+100);
   var ci=document.getElementById("confItems");
   if(ci){
     var itemHtml="";
@@ -2801,7 +2801,7 @@ function renderConfirmation(savedCart,savedCoupon){
 function openInvoice(){
   var bc=document.getElementById("invContent");if(!bc)return;
   var sub=cart.length?getTotal():120,disc=couponOk?Math.round(sub*.1):0,gst=Math.round((sub-disc)*.18),tot=sub-disc+gst;
-  var ordId="#CB-2025-00"+Math.floor(Math.random()*900+100);
+  var ordId="#CB-2026-00"+Math.floor(Math.random()*900+100);
   var today=new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
   var ckName=document.getElementById("ck-name");var custName=ckName&&ckName.value?ckName.value:"Customer";
   /* ── dark header ── */
@@ -3290,7 +3290,7 @@ document.addEventListener("DOMContentLoaded",function(){
     <div class="ov-body" style="padding:1.5rem">
       <p style="font-size:.8rem;color:var(--mid);margin-bottom:1.2rem;line-height:1.7">Enter your registered mobile number or the order ID we sent you on WhatsApp. We'll open a direct chat to give you a live update.</p>
       <div class="fg"><label class="fl">Mobile Number <span class="req">*</span></label><input type="tel" class="fi" id="os-phone" placeholder="+91 79072 54065" maxlength="15"></div>
-      <div class="fg" style="margin-top:.6rem"><label class="fl">Order ID (optional)</label><input type="text" class="fi" id="os-orderid" placeholder="e.g. CB-2025-0042"></div>
+      <div class="fg" style="margin-top:.6rem"><label class="fl">Order ID (optional)</label><input type="text" class="fi" id="os-orderid" placeholder="e.g. CB-2026-0042"></div>
       <button class="btn btn-dark btn-full btn-pill btn-lg" style="margin-top:1rem" onclick="checkOrderStatus()">Check on WhatsApp →</button>
       <div style="text-align:center;margin-top:1rem;font-size:.72rem;color:var(--muted)">You will be redirected to WhatsApp with your details pre-filled.</div>
     </div>
@@ -3451,7 +3451,7 @@ document.addEventListener("DOMContentLoaded",function(){
   <div class="modal modal-sm">
     <div class="mhdr"><h3>Track Your Order</h3><button class="xbtn" onclick="closeOv('trackOv')">✕</button></div>
     <div style="padding:1.4rem">
-      <div class="fg"><label class="fl">Order ID</label><input class="fi" id="trackId" placeholder="#CB-2025-00XXX" style="letter-spacing:.05em"></div>
+      <div class="fg"><label class="fl">Order ID</label><input class="fi" id="trackId" placeholder="#CB-2026-00XXX" style="letter-spacing:.05em"></div>
       <div class="fg"><label class="fl">Mobile Number</label><input class="fi" id="trackPhone" type="tel" placeholder="+91 79072 54065"></div>
       <button class="btn btn-dark btn-full btn-pill" onclick="trackOrder()" style="margin-bottom:1rem">Track Order →</button>
       <div id="trackResult" style="display:none">

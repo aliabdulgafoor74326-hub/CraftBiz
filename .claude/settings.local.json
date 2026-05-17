@@ -23,7 +23,8 @@
       "Bash(Select-String -Path \"c:\\\\Users\\\\ALI ABDUL GAFOOR\\\\Desktop\\\\craft\\\\index.html\" -Pattern \"</script>\")",
       "Bash(Select-Object -Last 5)",
       "Bash(Format-Table LineNumber, Line -AutoSize)",
-      "Bash(node -e \"const fs=require\\('fs'\\);const css=fs.readFileSync\\('c:/Users/ALI ABDUL GAFOOR/Desktop/craft/craftbiz.css','utf8'\\);let o=0,c=0;for\\(const ch of css\\){if\\(ch==='{'\\)o++;if\\(ch==='}'\\)c++;}console.log\\('CSS braces — open:',o,'close:',c,'balanced:',o===c\\);\")"
+      "Bash(node -e \"const fs=require\\('fs'\\);const css=fs.readFileSync\\('c:/Users/ALI ABDUL GAFOOR/Desktop/craft/craftbiz.css','utf8'\\);let o=0,c=0;for\\(const ch of css\\){if\\(ch==='{'\\)o++;if\\(ch==='}'\\)c++;}console.log\\('CSS braces — open:',o,'close:',c,'balanced:',o===c\\);\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const css=fs.readFileSync\\('craftbiz.css','utf8'\\);let o=0,c=0;for\\(const ch of css\\){if\\(ch==='{'\\)o++;if\\(ch==='}'\\)c++;}console.log\\('CSS braces — open:',o,'close:',c,'balanced:',o===c\\);\")"
     ]
   }
 }
