@@ -1475,6 +1475,10 @@ body.dark .mob-lnk { border-bottom:1px solid rgba(255,255,255,.06); }
 .quote-float { position:fixed; bottom:4.5rem; left:1rem; z-index:9997; background:var(--black); color:var(--white); border-radius:50px; display:flex; align-items:center; gap:.4rem; padding:.65rem 1rem .65rem .8rem; box-shadow:0 4px 20px rgba(0,0,0,.25); font-size:.75rem; font-weight:600; cursor:pointer; transition:transform .2s,box-shadow .2s,opacity .3s; text-decoration:none; }
 .quote-float:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,0,0,.35); }
 body.on-landing .quote-float { opacity:0; pointer-events:none; }
+body:has(#authPage.active) .quote-float,
+body:has(#adminPage.active) .quote-float,
+body:has(#ckPage.active) .quote-float,
+body:has(#termsPage.active) .quote-float { opacity:0; pointer-events:none; }
 @media(max-width:480px) { .quote-float .quote-float-label { display:none; } .quote-float { padding:.75rem; border-radius:50%; } }
 
 /* ══════════════════════════════════════════════
